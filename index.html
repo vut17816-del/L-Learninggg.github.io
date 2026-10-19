@@ -1,0 +1,2206 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="L-learning — Không gian học tập cá nhân hóa. Bản mẫu tương tác dành cho sinh viên, giảng viên, phụ huynh và quản trị viên.">
+<title>L-learning · Không gian học tập</title>
+<style>
+:root{--green:#236747;--dark:#193c2c;--muted:#7a837c;--bg:#f6f7f3;--line:#e6eae2;--gold:#b88428;--gold-bg:#fdf6e4}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.55 'Segoe UI',Arial,sans-serif;color:#253c31;background:var(--bg)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0}
+button,a,input,select,textarea{outline-offset:4px}
+aside{width:255px;position:fixed;height:100vh;background:#fff;border-right:1px solid var(--line);padding:26px 18px;display:flex;flex-direction:column;overflow-y:auto;z-index:10}
+.brand{font-size:24px;font-weight:750;letter-spacing:-1px;display:flex;align-items:center;gap:10px;padding:0 6px}
+.brand b{display:grid;place-items:center;width:36px;height:39px;background:var(--green);color:white;border-radius:12px 12px 12px 3px;font-size:27px}
+.brand span{color:var(--green)}
+.tiny{font-size:11px;font-weight:650;letter-spacing:1.6px;color:#939d95;text-transform:uppercase}
+.navlabel{margin:28px 10px 10px}
+nav{display:grid;gap:4px}
+nav button{text-align:left;padding:11px 12px;border-radius:9px;background:transparent;color:#667367;display:flex;gap:11px;align-items:center;font-weight:550;font-size:13.5px;transition:background .15s}
+nav button.active{background:#eaf1e7;color:var(--green);font-weight:650}
+nav button:hover{background:#f0f4ed}
+.nav-divider{font-size:10px;font-weight:700;letter-spacing:1.3px;color:#98a399;text-transform:uppercase;margin:14px 12px 4px}
+.ico{width:20px;font-size:17px;line-height:1;text-align:center}
+.sidebar-card{margin-top:auto;background:#f3f5ea;border-radius:13px;padding:16px}
+.sidebar-card p{font-size:12px;color:#7e8775;margin:6px 0 12px}
+.btn{background:var(--green);color:white;padding:11px 19px;border-radius:8px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:background .15s}
+.btn:hover{background:#194e35}
+.btn.light{background:white;color:var(--green);border:1px solid var(--line)}
+.btn.light:hover{background:#f4f7f1}
+.btn.gold{background:var(--gold);color:white}
+.btn.gold:hover{background:#976a1c}
+.btn.small{padding:7px 13px;font-size:12px}
+.profile{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.avatar{background:#f5ddba;border-radius:50%;width:37px;height:37px;display:grid;place-items:center;font-size:12px;font-weight:bold;flex-shrink:0}
+.sub{color:var(--muted);font-size:12px}
+main{margin-left:255px}
+header{height:78px;background:#fff;border-bottom:1px solid var(--line);padding:0 38px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:8}
+.crumb{color:#929991;font-size:12px}
+.header-right{display:flex;align-items:center;gap:14px}
+.pill{background:#eef3e8;color:var(--green);border-radius:25px;padding:5px 11px;font-size:11px;font-weight:600;display:inline-block}
+.pill.gold{background:var(--gold-bg);color:var(--gold);border:1px solid #ecd9b0}
+.pill.warn{background:#fcf0dd;color:#a97a31}
+.circlebtn{background:#f5f7f2;width:36px;height:36px;border-radius:50%;color:var(--green);display:grid;place-items:center}
+.content{max-width:1500px;margin:auto;padding:32px 38px}
+.page-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:14px}
+h1{font-size:27px;letter-spacing:-.8px;line-height:1.25;margin:0 0 7px}
+h2{font-size:18px;letter-spacing:-.3px;margin:0}
+h3{font-size:15px;margin:0 0 6px}
+p{margin:7px 0 15px}
+.muted{color:var(--muted)}
+.hero{position:relative;overflow:hidden;border-radius:17px;background:#e9efdc;padding:29px 31px;min-height:210px;display:flex;justify-content:space-between;align-items:center}
+.hero-copy{max-width:65%;z-index:1}
+.eyebrow{font-size:10px;letter-spacing:1.7px;font-weight:700;color:#5f774b;margin-bottom:11px;display:block}
+.hero h2{font-size:28px;line-height:1.3;letter-spacing:-.8px}
+.hero p{color:#708264;max-width:440px;font-size:12.5px;margin:12px 0 20px}
+.hero-art{width:240px;height:180px;flex-shrink:0;position:relative}
+.orbit{width:170px;height:170px;position:absolute;border:1px solid #c7d7ad;border-radius:50%;right:10px;top:5px}
+.orbit:after{content:'';position:absolute;inset:20px;border:1px solid #d3debf;border-radius:50%}
+.book{position:absolute;width:107px;height:130px;border-radius:8px 17px 17px 8px;transform:rotate(-13deg);background:#37734f;top:27px;left:74px;box-shadow:8px 8px 0 #ccd4b7;border-left:7px solid #215d3d;color:#edf2d6;padding:23px 13px;font-size:25px;font-weight:700}
+.book small{font-size:8px;display:block;font-weight:400;margin-top:7px;letter-spacing:1px}
+.float{position:absolute;z-index:1;background:#fffdf1;border:1px solid #d9e1c9;box-shadow:0 6px 15px #71835412;border-radius:12px;padding:10px 15px;color:#4b7447;font-size:17px}
+.star{top:13px;left:33px;transform:rotate(-12deg)}
+.check{bottom:14px;right:0;transform:rotate(9deg)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:22px 0 28px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;gap:13px;align-items:center}
+.stat-icon{width:40px;height:40px;border-radius:11px;background:#eef3e7;display:grid;place-items:center;color:#658448;font-size:19px;flex-shrink:0}
+.stat:nth-child(2) .stat-icon{background:#fff1df;color:#b3833c}
+.stat:nth-child(3) .stat-icon{background:#eeedf9;color:#8b7db1}
+.stat:nth-child(4) .stat-icon{background:#fbece2;color:#bc8760}
+.stat strong{font-size:22px;line-height:1.3}
+.stat .sub{font-size:11px}
+.columns{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(290px,1fr);gap:24px}
+.columns-equal{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px;gap:10px;flex-wrap:wrap}
+.textbtn{background:none;color:var(--green);font-size:12px;padding:4px;font-weight:600}
+.textbtn:hover{text-decoration:underline}
+.courses{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.course{background:white;border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.course-top{height:100px;padding:19px 21px;background:#e8eee3;display:flex;align-items:center;justify-content:space-between}
+.course:nth-child(2) .course-top{background:#eeeaf5}
+.course-top .subject{font-size:11px;letter-spacing:1.7px;color:#718566}
+.course-top b{font-size:33px;font-weight:500;color:#759163}
+.course:nth-child(2) .course-top b{color:#a094b7}
+.course-body{padding:18px}
+.progress{height:6px;background:#edf0e8;border-radius:10px;overflow:hidden;margin:10px 0 14px}
+.progress span{height:100%;display:block;background:#729669;border-radius:10px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.course .btn{width:100%;margin-top:7px}
+.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:22px}
+.graph{display:flex;justify-content:center;margin:0 auto}
+.graph svg{width:230px;height:194px}
+.legend{display:flex;justify-content:center;gap:19px;font-size:10px;color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:#62865b;margin-right:5px}
+.insight{background:#f7f7ee;border-radius:8px;margin-top:14px;padding:12px;font-size:11px;color:#7b815f}
+.tasks{margin-top:25px}
+.task{padding:15px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.task:last-child{border-bottom:0}
+.task-icon{width:37px;height:42px;background:#f3f4ef;display:grid;place-items:center;border-radius:8px;color:#7f9474;flex-shrink:0}
+.task-info{flex:1}
+.tag{font-size:10px;border-radius:5px;padding:4px 7px;background:#fcf0dd;color:#a97a31;font-weight:600}
+.footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:11px;color:#98a093;flex-wrap:wrap;gap:10px}
+.view[hidden]{display:none}
+.page-intro{margin-bottom:26px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.gaplist{display:grid;gap:14px}
+.detail{padding:16px;background:#f8faf5;border-radius:10px;border:1px solid #ebf0e6}
+.pricing{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.price-card{padding:24px 19px;background:white;border:1px solid var(--line);border-radius:13px;display:flex;flex-direction:column}
+.price-card.featured{border:2px solid var(--green)}
+.price{font-size:27px;font-weight:700;margin:22px 0 0}
+.price-card ul{padding-left:18px;font-size:12px;color:var(--muted);line-height:2;flex:1}
+.price-card .btn{margin-top:20px}
+.switch{display:flex;gap:5px;background:#e8ece3;padding:4px;border-radius:9px}
+.switch button{border-radius:7px;background:transparent;padding:7px 15px;color:#687562;font-size:12.5px;font-weight:600}
+.switch button.selected{background:#fff;color:var(--green);box-shadow:0 2px 3px #00000009}
+dialog{border:0;border-radius:18px;padding:30px;width:min(580px,92vw);color:#253c31;box-shadow:0 20px 100px #0003;max-height:90vh;overflow-y:auto}
+dialog::backdrop{background:#203b3266;backdrop-filter:blur(3px)}
+.option{display:block;border:1px solid var(--line);padding:13px;margin:10px 0;border-radius:9px;cursor:pointer}
+.option:has(input:checked){background:#edf3e7;border-color:#4f855c}
+.option input{margin-right:9px}
+.close{float:right;background:#f2f4ef;border-radius:50%;width:30px;height:30px;font-size:18px;line-height:1}
+input[type=text],input[type=email],input[type=password],input[type=date],input[type=number],select,textarea{width:100%;border:1px solid #d6dfd0;border-radius:8px;padding:11px 12px;margin:6px 0 14px;background:white}
+textarea{min-height:85px;resize:vertical}
+.notice{padding:12px 16px;background:#edf2e6;border-radius:9px;font-size:12px;margin-bottom:20px}
+.empty{padding:25px;text-align:center}
+.results{font-size:45px;font-weight:bold;color:var(--green);margin:20px 0}
+.skillbar{margin:16px 0}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:12px 22px;border-radius:9px;background:#244c35;color:white;z-index:30;box-shadow:0 8px 30px #0003;font-weight:500}
+.flash{min-height:170px;display:grid;place-items:center;text-align:center;background:#eef3e7;border-radius:13px;padding:30px;font-size:21px;cursor:pointer;width:100%;color:var(--green)}
+
+/* Book rental styles */
+.book-card{display:flex;flex-direction:column;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px;transition:transform .15s,box-shadow .15s}
+.book-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px #0000000a}
+.book-cover{height:115px;border-radius:10px;background:linear-gradient(135deg,#2e6f4e,#1b4631);color:#f3f7ec;padding:16px;display:flex;flex-direction:column;justify-content:space-between;margin-bottom:14px;position:relative;overflow:hidden}
+.book-cover.alt1{background:linear-gradient(135deg,#5a6b8c,#34415c)}
+.book-cover.alt2{background:linear-gradient(135deg,#8a6b3e,#594322)}
+.book-cover.alt3{background:linear-gradient(135deg,#685282,#3e2e52)}
+.book-cover b{font-size:14px;line-height:1.3;max-width:85%}
+.book-cover span{font-size:10px;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.book-cover i{position:absolute;right:12px;bottom:8px;font-size:38px;opacity:.22;font-style:normal}
+
+/* AI Assistant styles */
+.chat-box{background:#f8faf6;border:1px solid var(--line);border-radius:12px;padding:16px;height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.msg{max-width:85%;padding:12px 15px;border-radius:12px;font-size:13px;line-height:1.5}
+.msg.ai{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:3px}
+.msg.user{background:var(--green);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:#eef3e8;color:var(--green);border:1px solid #d5e2ca;padding:6px 11px;border-radius:20px;font-size:11.5px;cursor:pointer}
+.chip:hover{background:#dfead6}
+
+/* Leaderboard & Reward styles */
+.rank-banner{background:linear-gradient(120deg,#1f573c,#357a56);color:#fff;border-radius:16px;padding:26px 30px;display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px;flex-wrap:wrap}
+.rank-banner h2{font-size:24px;margin:6px 0}
+.rank-banner p{color:#d8e8dc;max-width:560px;margin:6px 0 16px;font-size:13px}
+.rank-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line);gap:12px}
+.rank-item:last-child{border-bottom:0}
+.rank-item.me{background:#f2f7ee;border-radius:10px;border:1px solid #c6dbbe}
+.rank-badge{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;background:#eef1ec;color:#546556;flex-shrink:0}
+.rank-1{background:#f9e398;color:#855c10}
+.rank-2{background:#e4e9ec;color:#4a5861}
+.rank-3{background:#f3d2b8;color:#874c24}
+
+/* Table & Revenue styles */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line)}
+th{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.rev-bar{display:flex;height:26px;border-radius:8px;overflow:hidden;margin:16px 0}
+.rev-seg{height:100%;display:grid;place-items:center;color:#fff;font-size:10px;font-weight:700}
+
+[hidden]{display:none!important}
+body.signed-out>aside,body.signed-out>main{display:none}
+.login-shell{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:#fff}
+.login-story{padding:60px clamp(30px,6vw,100px);background:#e9efdc;display:flex;flex-direction:column;justify-content:center}
+.login-story h1{font-size:clamp(36px,4vw,60px);margin:45px 0 20px}
+.login-story p{font-size:16px;max-width:430px;color:#617557}
+.login-art{font-size:80px;margin:35px 0;color:#236747}
+.login-form-wrap{padding:50px 35px;display:grid;place-items:center}
+.login-form-inner{width:100%;max-width:480px}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0}
+.role-choice{border:1px solid var(--line);border-radius:11px;padding:14px;background:white;color:var(--dark);text-align:left}
+.role-choice[aria-pressed=true]{border-color:var(--green);background:#eef4e9;box-shadow:0 0 0 1px var(--green)}
+.role-choice strong,.role-choice small{display:block}
+.role-choice small{font-size:11px;color:#758271;margin-top:3px}
+.login-field{display:block;font-weight:600;margin-top:16px}
+.login-input{width:100%;border:1px solid #d6dfd0;border-radius:8px;padding:12px;margin-top:7px;background:white}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:65px}
+.password-toggle{position:absolute;right:8px;top:16px;background:none;color:var(--green);padding:4px}
+.login-submit{width:100%;margin-top:16px}
+.demo-hint{background:#f5f7f1;border-radius:10px;padding:15px;margin-top:20px;font-size:12px;overflow-wrap:anywhere}
+.login-error{color:#a33c2d;font-size:13px;min-height:20px;margin:8px 0}
+.role-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.role-summary strong{display:block;font-size:28px}
+.role-record{padding:15px 0;border-bottom:1px solid var(--line)}
+.role-record:last-child{border:0}
+.role-actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+
+@media(max-width:1100px){
+  aside{width:215px;padding:22px 14px}
+  main{margin-left:215px}
+  .content{padding:25px}
+  .stats{grid-template-columns:1fr 1fr}
+  .pricing{grid-template-columns:1fr 1fr}
+  .hero-art{width:190px}
+  .columns,.columns-equal{grid-template-columns:1fr}
+  .courses{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr 1fr}
+}
+@media(max-width:850px){
+  .login-shell{grid-template-columns:1fr}
+  .login-story{padding:28px}
+  .login-story h1{font-size:32px;margin:24px 0 10px}
+  .login-art,.login-story .story-note{display:none}
+  .login-form-wrap{padding:30px 20px}
+  .role-summary{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  aside{position:static;width:auto;height:auto;padding:15px;border:0}
+  .brand{font-size:21px}
+  .navlabel,.sidebar-card,.profile,.nav-divider{display:none}
+  nav{display:flex;overflow:auto;margin-top:15px;gap:5px}
+  nav button{white-space:nowrap;padding:9px 11px;font-size:12px}
+  nav .ico{display:none}
+  main{margin:0}
+  header{height:58px;padding:0 18px}
+  .header-right{gap:8px}
+  .content{padding:22px 16px}
+  .hero-copy{max-width:100%}
+  .hero-art{display:none}
+  .grid3,.pricing,.courses{grid-template-columns:1fr}
+  .date{display:none}
+}
+@media(prefers-reduced-motion:no-preference){
+  .view{animation:appear .25s ease}
+  @keyframes appear{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+}
+</style>
+</head>
+<body class="signed-out">
+
+<!-- MÀN HÌNH ĐĂNG NHẬP -->
+<section id="login-screen" class="login-shell" aria-label="Đăng nhập L-learning">
+  <div class="login-story">
+    <div class="brand"><b>L</b><div>L<span>-learning</span></div></div>
+    <h1>Kết nối hôm nay.<br>Tiến bộ mỗi ngày.</h1>
+    <p>Một không gian chung cho người học, gia đình, giảng viên và đơn vị quản lý.</p>
+    <div class="login-art" aria-hidden="true">▤ &nbsp; ✧ &nbsp; ↗</div>
+    <p class="story-note">Đồng hành với từng hành trình học tập, từ lớp học, thư viện sách, trợ lý AI đến những mục tiêu cá nhân.</p>
+  </div>
+  <div class="login-form-wrap">
+    <div class="login-form-inner">
+      <span class="eyebrow">CHÀO MỪNG ĐẾN VỚI L-LEARNING</span>
+      <h2 style="font-size:30px;margin-top:10px">Đăng nhập</h2>
+      <p class="muted">Chọn vai trò để mở không gian của bạn.</p>
+      <div class="role-grid" role="group" aria-label="Vai trò đăng nhập">
+        <button class="role-choice" data-role="admin" aria-pressed="false"><strong>▦ Quản trị viên</strong><small>Xem mọi chức năng & Doanh thu</small></button>
+        <button class="role-choice" data-role="student" aria-pressed="true"><strong>▤ Sinh viên</strong><small>Học tập, thuê sách & AI giải bài</small></button>
+        <button class="role-choice" data-role="parent" aria-pressed="false"><strong>♡ Phụ huynh</strong><small>Đồng hành cùng người học</small></button>
+        <button class="role-choice" data-role="lecturer" aria-pressed="false"><strong>⌘ Giảng viên</strong><small>Quản lý lớp & Giao bài tập</small></button>
+      </div>
+      <form id="login-form">
+        <label class="login-field" for="login-email">Email</label>
+        <input class="login-input" id="login-email" type="email" autocomplete="username" placeholder="Nhập email tài khoản" required>
+        <div class="row" style="margin-top:16px">
+          <label class="login-field" for="login-password" style="margin:0">Mật khẩu</label>
+          <button type="button" class="textbtn" id="forgot-password-btn">Quên mật khẩu?</button>
+        </div>
+        <div class="password-wrap">
+          <input class="login-input" id="login-password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" required>
+          <button class="password-toggle" id="password-toggle" type="button" aria-label="Hiện mật khẩu" aria-pressed="false">Hiện</button>
+        </div>
+        <div id="login-error" class="login-error" role="alert"></div>
+        <button class="btn login-submit" type="submit">Đăng nhập →</button>
+      </form>
+      <div class="demo-hint">
+        <div class="row">
+          <strong>Tài khoản trải nghiệm · <span id="demo-role"></span></strong>
+          <button class="textbtn" id="forgot-quick-link" type="button">Đặt lại mật khẩu ↻</button>
+        </div>
+        <div style="margin-top:7px">Email: <span id="demo-email"></span><br>Mật khẩu hiện tại: <strong id="demo-pass-display">Demo@123</strong></div>
+        <button class="textbtn" id="fill-demo" style="margin-top:8px">Điền tài khoản mẫu ↗</button>
+      </div>
+      <p class="sub" style="margin-top:16px">Đăng nhập mô phỏng để thử giao diện. Quản trị viên có thể xem tất cả các chức năng của hệ thống.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THANH ĐIỀU HƯỚNG BÊN TRÁI -->
+<aside>
+  <div class="brand"><b>L</b><div>L<span>-learning</span></div></div>
+  <div class="tiny navlabel">KHÔNG GIAN HỌC TẬP</div>
+  <nav aria-label="Điều hướng chính" id="main-nav">
+    <button data-view="overview" class="active"><span class="ico">▦</span>Tổng quan</button>
+    <button data-view="classes"><span class="ico">▤</span>Lớp học của tôi</button>
+    <button data-view="practice"><span class="ico">▢</span>Bài tập & kiểm tra</button>
+    <button data-view="skills"><span class="ico">⌘</span>Năng lực cá nhân</button>
+    <button data-view="books"><span class="ico">📖</span>Thư viện & Thuê sách</button>
+    <button data-view="ai-helper"><span class="ico">✦</span>Trợ lý AI giải bài</button>
+    <button data-view="leaderboard"><span class="ico">★</span>Xếp hạng & Thưởng</button>
+    <button data-view="plans"><span class="ico">◇</span>Gói học tập</button>
+  </nav>
+  <div class="sidebar-card">
+    <span style="font-size:21px">✧</span>
+    <h3 id="sidebar-plan-title">Học theo cách của bạn</h3>
+    <p id="sidebar-plan-desc">Tích điểm xếp hạng để nhận thưởng Gói Cá nhân hóa miễn phí.</p>
+    <button class="btn small" data-view="leaderboard" style="width:100%">Săn thưởng gói cá nhân ↗</button>
+  </div>
+  <div class="profile">
+    <div class="avatar">SV</div>
+    <div>
+      <strong style="font-size:12px" id="profile-name">Sinh viên trải nghiệm</strong>
+      <div class="sub" id="profile-plan-badge">Gói Miễn phí</div>
+    </div>
+  </div>
+</aside>
+
+<!-- NỘI DUNG CHÍNH -->
+<main>
+  <header>
+    <div class="crumb">Không gian L-learning <span style="padding:0 10px">/</span> <strong id="breadcrumb" style="color:#526551">Tổng quan</strong></div>
+    <div class="header-right">
+      <span class="pill gold" id="reward-header-pill" hidden>★ Gói Cá nhân hóa (Thưởng Xếp hạng)</span>
+      <span class="pill" id="current-role">Bản mẫu tương tác</span>
+      <button class="btn light small" id="logout">Đăng xuất</button>
+      <button class="circlebtn" aria-label="Thông báo" id="notify">♧</button>
+    </div>
+  </header>
+
+  <div class="content">
+    <!-- 1. TỔNG QUAN SINH VIÊN -->
+    <section id="overview" class="view">
+      <div class="page-title">
+        <div>
+          <h1>Một ngày mới, một bước tiến 🌱</h1>
+          <div class="muted">Cùng tiếp tục hành trình học tập của bạn hôm nay.</div>
+        </div>
+        <div class="sub date">HỌC MỖI NGÀY · TIẾN BỘ MỖI NGÀY</div>
+      </div>
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">LỘ TRÌNH DÀNH RIÊNG CHO BẠN</div>
+          <h2>Hiểu mình hơn.<br>Học đúng điều mình cần.</h2>
+          <p>Từ kết quả học tập, thư viện giáo trình số đến Trợ lý AI giải bài cơ bản — từng bước củng cố kiến thức, tự tin tiến về phía trước.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn" data-view="skills">Khám phá năng lực <span>→</span></button>
+            <button class="btn light" data-view="ai-helper">✦ Hỏi Trợ lý AI</button>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit"></div>
+          <div class="float star">✦</div>
+          <div class="book">L.<small>LEARN. GROW.<br>YOUR OWN WAY.</small></div>
+          <div class="float check">✓ <small style="font-size:11px">Thêm một tiến bộ</small></div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-icon">▤</div><div><strong id="class-count">3</strong><div class="sub">Lớp học tham gia</div></div></div>
+        <div class="stat"><div class="stat-icon">▢</div><div><strong id="done-count">12<span style="font-size:12px;color:#9ba395"> / 15</span></strong><div class="sub">Bài tập hoàn thành</div></div></div>
+        <div class="stat"><div class="stat-icon">📖</div><div><strong id="rented-stat-count">1</strong><div class="sub">Sách giáo trình đang thuê</div></div></div>
+        <div class="stat"><div class="stat-icon">★</div><div><strong id="points-stat-count">460 <span style="font-size:12px;font-weight:400">điểm</span></strong><div class="sub">Điểm xếp hạng tích lũy</div></div></div>
+      </div>
+
+      <div class="columns">
+        <div>
+          <div class="section-head">
+            <h2>Tiếp tục học tập</h2>
+            <button class="textbtn" data-view="classes">Tất cả lớp học ↗</button>
+          </div>
+          <div class="courses">
+            <article class="course">
+              <div class="course-top"><div><div class="subject">DATA & ANALYTICS</div><strong>Khám phá dữ liệu</strong></div><b>▥</b></div>
+              <div class="course-body">
+                <h3>Phân tích dữ liệu</h3>
+                <div class="sub">Lớp PTDL · 8 chương</div>
+                <div class="row sub" style="margin-top:18px"><span>Tiến độ học tập mẫu</span><strong>65%</strong></div>
+                <div class="progress"><span style="width:65%"></span></div>
+                <button class="btn light small" data-quiz="1">Tiếp tục học →</button>
+              </div>
+            </article>
+            <article class="course">
+              <div class="course-top"><div><div class="subject">DIGITAL BUSINESS</div><strong>Kết nối tri thức</strong></div><b>⌘</b></div>
+              <div class="course-body">
+                <h3>Hệ thống thương mại điện tử</h3>
+                <div class="sub">Lớp TMĐT · 6 chương</div>
+                <div class="row sub" style="margin-top:18px"><span>Tiến độ học tập mẫu</span><strong>42%</strong></div>
+                <div class="progress"><span style="width:42%;background:#a49aba"></span></div>
+                <button class="btn light small" data-course="Hệ thống thương mại điện tử">Xem nội dung →</button>
+              </div>
+            </article>
+          </div>
+
+          <div class="tasks">
+            <div class="section-head">
+              <h2>Nhiệm vụ & Bài tập được giao</h2>
+              <span class="sub" id="overview-task-count">2 nhiệm vụ</span>
+            </div>
+            <div class="panel" style="padding:5px 20px" id="student-tasks-list"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-head"><h2>Bản đồ năng lực</h2><span class="pill">Cá nhân hóa</span></div>
+          <div class="panel">
+            <div class="row"><h3>Phân tích dữ liệu</h3><span class="sub">Minh họa</span></div>
+            <div class="graph">
+              <svg viewBox="0 0 250 205" role="img" aria-label="Biểu đồ năng lực mẫu: thống kê 80%, trực quan 75%, xử lý 70%, hồi quy 40%, xác suất 55%">
+                <g fill="none" stroke="#e2e8dd">
+                  <path d="M125 30L200 85L172 170L78 170L50 85Z"/>
+                  <path d="M125 49L180 89L160 151L90 151L70 89Z"/>
+                  <path d="M125 70L160 96L146 131L104 131L90 96Z"/>
+                  <path d="M125 106L125 30M125 106L200 85M125 106L172 170M125 106L78 170M125 106L50 85"/>
+                </g>
+                <path d="M125 45L181 90L158 151L106 132L84 94Z" fill="#7c9d6e30" stroke="#719665" stroke-width="2"/>
+                <g fill="#719665"><circle cx="125" cy="45" r="3"/><circle cx="181" cy="90" r="3"/><circle cx="158" cy="151" r="3"/><circle cx="106" cy="132" r="3"/><circle cx="84" cy="94" r="3"/></g>
+                <g fill="#7b8775" font-family="Arial" font-size="9" text-anchor="middle">
+                  <text x="125" y="15">Thống kê</text><text x="222" y="84">Trực quan</text><text x="183" y="189">Xử lý dữ liệu</text><text x="65" y="189">Hồi quy</text><text x="26" y="84">Xác suất</text>
+                </g>
+              </svg>
+            </div>
+            <div class="legend"><span><i class="dot"></i>Năng lực hiện tại (mẫu)</span></div>
+            <div class="insight">✧ <strong>Gợi ý hôm nay</strong><br>Bạn có thể dành thêm thời gian cho Hồi quy và Xác suất hoặc dùng Trợ lý AI để xem giải thích từng bước.</div>
+            <button class="textbtn" data-view="skills" style="margin-top:12px;width:100%">Xem phân tích chi tiết →</button>
+          </div>
+          <div class="panel" style="margin-top:17px;background:#eef1e5">
+            <div class="tiny">MỘT CHÚT MỖT NGÀY</div>
+            <h3 style="margin:10px 0">Kiến thức bền vững từ thói quen nhỏ.</h3>
+            <div class="sub">Thử 3 thẻ ghi nhớ trước khi bắt đầu bài học.</div>
+            <button class="textbtn" id="flash-open" style="margin-top:10px">Ôn tập Flashcard →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. LỚP HỌC CỦA TÔI -->
+    <section id="classes" class="view" hidden>
+      <div class="page-title">
+        <div><h1>Lớp học của tôi</h1><div class="muted">Tài liệu, bài tập và tiến độ — trong cùng một nơi.</div></div>
+        <button class="btn" id="join">+ Tham gia lớp</button>
+      </div>
+      <div class="notice">Dữ liệu lớp học minh họa. Bạn có thể thử mã <strong>LLEARN</strong> để tham gia một lớp mẫu.</div>
+      <div class="grid3" id="class-list"></div>
+    </section>
+
+    <!-- 3. BÀI TẬP & KIỂM TRA -->
+    <section id="practice" class="view" hidden>
+      <div class="page-title">
+        <div><h1>Bài tập & kiểm tra</h1><div class="muted">Luyện tập để biết mình đã hiểu đến đâu và tích điểm bảng xếp hạng.</div></div>
+        <button class="btn light" data-view="ai-helper">✦ Mở Trợ lý AI giải bài</button>
+      </div>
+      <div class="panel">
+        <div class="row">
+          <div>
+            <span class="pill">Có thể làm ngay · +40 điểm xếp hạng</span>
+            <h2 style="margin-top:15px">Ôn tập thống kê mô tả</h2>
+            <p class="muted">3 câu hỏi minh họa · Chấm điểm tự động · Phản hồi theo chủ đề</p>
+          </div>
+          <button class="btn" data-quiz="1">Bắt đầu làm bài →</button>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:20px">
+        <div class="section-head">
+          <h2>Danh sách bài tập từ Giảng viên</h2>
+          <span class="sub">Đồng bộ trực tiếp khi giảng viên giao bài mới</span>
+        </div>
+        <div id="practice-assigned-list"></div>
+      </div>
+      <div class="panel" style="margin-top:20px">
+        <h2>Kết quả luyện tập gần nhất</h2>
+        <div id="last-result" class="empty muted">Bạn chưa hoàn thành bài luyện tập trong bản mẫu này.</div>
+      </div>
+    </section>
+
+    <!-- 4. NĂNG LỰC CÁ NHÂN -->
+    <section id="skills" class="view" hidden>
+      <div class="page-intro">
+        <div class="eyebrow">HIỂU MÌNH ĐỂ HỌC TỐT HƠN</div>
+        <h1>Năng lực cá nhân</h1>
+        <p class="muted">Xác định kiến thức cần củng cố và lựa chọn bước học tiếp theo.</p>
+      </div>
+      <div class="notice">Hồ sơ bên dưới là dữ liệu minh họa. Kết quả bài luyện tập được phân tích theo nhãn kiến thức.</div>
+      <div class="columns">
+        <div class="panel">
+          <div class="section-head"><h2>Hồ sơ kiến thức mẫu</h2><span class="sub">Phân tích dữ liệu</span></div>
+          <div id="bars"></div>
+        </div>
+        <div class="panel">
+          <span class="pill">Lộ trình đề xuất</span>
+          <h2 style="margin:17px 0">Từng bước lấp đầy khoảng trống</h2>
+          <div class="gaplist">
+            <div class="detail"><h3>01 · Củng cố xác suất</h3><div class="sub">Ôn lại biến cố và xác suất có điều kiện.</div></div>
+            <div class="detail"><h3>02 · Hiểu mô hình hồi quy</h3><div class="sub">Phân biệt biến độc lập, biến phụ thuộc và hệ số.</div></div>
+            <div class="detail"><h3>03 · Kiểm tra kiến thức nền</h3><div class="sub">Làm bài ngắn và đọc phản hồi theo từng chủ đề.</div></div>
+            <button class="btn" data-quiz="1">Luyện tập kiến thức nền →</button>
+          </div>
+        </div>
+      </div>
+      <div id="skill-result" class="panel" style="margin-top:22px">
+        <h2>Phân tích từ bài làm của bạn</h2>
+        <p class="muted">Hoàn thành bài luyện tập để nhận gợi ý dựa trên câu trả lời thực tế.</p>
+      </div>
+    </section>
+
+    <!-- 5. THƯ VIỆN & THUÊ SÁCH GIÁO TRÌNH (MỚI) -->
+    <section id="books" class="view" hidden>
+      <div class="page-title">
+        <div>
+          <span class="eyebrow">THƯ VIỆN SỐ HỌC THUẬT</span>
+          <h1>Thư viện & Thuê sách giáo trình</h1>
+          <div class="muted">Thuê giáo trình điện tử hoặc sách in theo tuần/học kỳ với chi phí tiết kiệm cho sinh viên.</div>
+        </div>
+        <div class="switch" id="book-filter-switch">
+          <button class="selected" data-book-cat="all">Tất cả sách</button>
+          <button data-book-cat="data">Dữ liệu & AI</button>
+          <button data-book-cat="biz">Kinh tế & TMĐT</button>
+        </div>
+      </div>
+
+      <div class="notice" id="book-perk-notice">
+        💡 <strong>Ưu đãi thành viên:</strong> Sinh viên sở hữu <strong>Gói Cá nhân hóa</strong> (mua hoặc nhận thưởng từ Bảng xếp hạng) được giảm <strong>50% phí thuê sách</strong> và miễn phí đọc bản điện tử 7 ngày!
+      </div>
+
+      <div class="panel" style="margin-bottom:24px">
+        <div class="section-head">
+          <h2>Sách bạn đang thuê</h2>
+          <span class="pill" id="rented-books-badge">1 cuốn đang thuê</span>
+        </div>
+        <div id="my-rented-books"></div>
+      </div>
+
+      <div class="section-head">
+        <h2>Danh mục sách giáo trình & tham khảo</h2>
+        <span class="sub">Bấm "Thuê sách" để chọn thời hạn thuê linh hoạt</span>
+      </div>
+      <div class="grid3" id="book-catalog"></div>
+    </section>
+
+    <!-- 6. TRỢ LÝ AI GIẢI BÀI CƠ BẢN (MỚI) -->
+    <section id="ai-helper" class="view" hidden>
+      <div class="page-title">
+        <div>
+          <span class="eyebrow">TRÍ TUỆ NHÂN TẠO HỖ TRỢ HỌC TẬP</span>
+          <h1>Trợ lý AI giải bài cơ bản ✦</h1>
+          <div class="muted">Giải từng bước các bài toán thống kê, phương trình đại số và giải thích khái niệm môn học dễ hiểu.</div>
+        </div>
+        <span class="pill">Phiên bản AI Hướng dẫn từng bước</span>
+      </div>
+
+      <div class="columns">
+        <!-- Cột trái: Chat hỏi đáp & Giải thích lý thuyết -->
+        <div class="panel">
+          <div class="section-head">
+            <h2>Hỏi đáp & Giải bài cùng L-AI</h2>
+            <button class="textbtn" id="clear-ai-chat">Xóa hội thoại</button>
+          </div>
+          <div class="sub" style="margin-bottom:10px">Chọn nhanh câu hỏi mẫu hoặc nhập bài toán / khái niệm bạn cần giải thích:</div>
+          <div class="chip-row">
+            <button class="chip" data-ai-prompt="Tính trung bình, trung vị của dãy: 4, 8, 6, 10, 12">📊 Tính thống kê dãy 4, 8, 6, 10, 12</button>
+            <button class="chip" data-ai-prompt="Giải phương trình bậc hai: x^2 - 5x + 6 = 0">📐 Giải x² - 5x + 6 = 0</button>
+            <button class="chip" data-ai-prompt="Giải thích hồi quy tuyến tính dễ hiểu">📈 Hồi quy tuyến tính là gì?</button>
+            <button class="chip" data-ai-prompt="Phân biệt mô hình B2B, B2C, C2C trong TMĐT">🛒 Phân biệt B2B, B2C, C2C</button>
+            <button class="chip" data-ai-prompt="Công thức xác suất có điều kiện Bayes">🎲 Xác suất có điều kiện</button>
+          </div>
+          <div class="chat-box" id="ai-chat-box"></div>
+          <form id="ai-chat-form" style="display:flex;gap:10px">
+            <input type="text" id="ai-user-input" placeholder="Ví dụ: Tính trung bình của 3, 7, 11, 15 hoặc Giải 2x + 10 = 0..." style="margin:0" required>
+            <button class="btn" type="submit" style="white-space:nowrap">Gửi AI →</button>
+          </form>
+        </div>
+
+        <!-- Cột phải: Máy tính giải nhanh Thống kê & Phương trình -->
+        <div style="display:grid;gap:20px;align-content:start">
+          <div class="panel">
+            <span class="pill">Công cụ 1 · Thống kê mô tả</span>
+            <h3 style="margin-top:12px">Giải nhanh dãy số thống kê</h3>
+            <p class="sub">Nhập các số cách nhau bằng dấu phẩy để AI trình bày lời giải Trung bình, Trung vị, Phương sai & Độ lệch chuẩn.</p>
+            <input type="text" id="ai-stat-input" value="12, 15, 18, 22, 25, 28">
+            <button class="btn light small" id="ai-stat-solve" style="width:100%">Giải chi tiết từng bước →</button>
+            <div id="ai-stat-output" class="detail" style="margin-top:12px;font-size:12.5px"></div>
+          </div>
+
+          <div class="panel">
+            <span class="pill">Công cụ 2 · Đại số cơ bản</span>
+            <h3 style="margin-top:12px">Giải phương trình bậc 1 & bậc 2</h3>
+            <p class="sub">Dạng <strong>ax² + bx + c = 0</strong> (nhập a = 0 nếu là phương trình bậc nhất ax + b = 0).</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+              <div><label class="sub">Hệ số a</label><input type="number" id="eq-a" value="1" step="any"></div>
+              <div><label class="sub">Hệ số b</label><input type="number" id="eq-b" value="-5" step="any"></div>
+              <div><label class="sub">Hệ số c</label><input type="number" id="eq-c" value="6" step="any"></div>
+            </div>
+            <button class="btn light small" id="ai-eq-solve" style="width:100%">Tìm nghiệm & Lời giải →</button>
+            <div id="ai-eq-output" class="detail" style="margin-top:12px;font-size:12.5px"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. BẢNG XẾP HẠNG & PHẦN THƯỞNG GÓI CÁ NHÂN HÓA (MỚI) -->
+    <section id="leaderboard" class="view" hidden>
+      <div class="page-title">
+        <div>
+          <span class="eyebrow">THI ĐUA HỌC TẬP & ĐỔI THƯỞNG</span>
+          <h1>Bảng xếp hạng & Phần thưởng ★</h1>
+          <div class="muted">Tích lũy điểm qua bài tập, chuỗi ngày học và đọc sách để nhận miễn phí Gói Cá nhân hóa.</div>
+        </div>
+        <button class="btn light small" id="earn-bonus-points">+ Điểm danh & Làm nhiệm vụ nhanh (+40đ)</button>
+      </div>
+
+      <!-- Banner Phần thưởng Gói cá nhân hóa -->
+      <div class="rank-banner">
+        <div>
+          <span class="pill gold">🎁 PHẦN THƯỞNG ĐẶC BIỆT THÁNG 10/2026</span>
+          <h2>Phần thưởng Xếp hạng: 01 Gói Cá nhân hóa Miễn phí</h2>
+          <p>Sinh viên lọt <strong>Top 3 Bảng xếp hạng</strong> hoặc đạt mốc <strong>500 điểm tích lũy</strong> sẽ nhận ngay phần thưởng là <strong>Gói học tập Cá nhân hóa (trị giá 49.000đ/tháng)</strong> — mở khóa phân tích lỗ hổng kiến thức chuyên sâu và ưu đãi 50% phí thuê sách!</p>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <button class="btn gold" id="claim-personal-reward">★ Nhận thưởng Gói Cá nhân hóa ngay</button>
+            <span style="font-size:12px;color:#e4f0e7" id="reward-progress-text">Điểm của bạn: 460 / 500 điểm (hoặc bấm để kích hoạt thử ngay)</span>
+          </div>
+        </div>
+        <div class="panel" style="color:var(--dark);min-width:250px;text-align:center">
+          <div class="tiny">TRẠNG THÁI PHẦN THƯỞNG</div>
+          <div style="font-size:28px;font-weight:800;color:var(--green);margin:8px 0" id="my-rank-points">460 điểm</div>
+          <div class="sub" id="my-reward-status">Chưa kích hoạt Gói thưởng</div>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="panel">
+          <div class="section-head">
+            <h2>Bảng xếp hạng Sinh viên tiêu biểu</h2>
+            <span class="pill">Cập nhật theo thời gian thực</span>
+          </div>
+          <div id="leaderboard-list"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Cơ chế tích điểm & Quyền lợi</h2>
+          <div class="gaplist" style="margin-top:16px">
+            <div class="detail">
+              <div class="row"><strong>1. Gói Cá nhân hóa (Phần thưởng Top 1–3)</strong><span class="pill gold">Miễn phí 100%</span></div>
+              <p class="sub" style="margin:6px 0 0">Bao gồm Bản đồ năng lực đa chiều, Đề xuất bài ôn tập tự động, Trợ lý AI không giới hạn và Giảm 50% phí thuê giáo trình.</p>
+            </div>
+            <div class="detail">
+              <strong>2. Cách tích điểm nhanh</strong>
+              <ul class="sub" style="margin:8px 0 0;padding-left:18px;line-height:1.8">
+                <li>Hoàn thành bài trắc nghiệm: <strong>+40 điểm</strong></li>
+                <li>Nộp bài tập giảng viên giao đúng hạn: <strong>+50 điểm</strong></li>
+                <li>Thuê và đọc sách giáo trình: <strong>+30 điểm</strong></li>
+                <li>Duyệt Flashcard & Điểm danh mỗi ngày: <strong>+20 điểm</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. GÓI HỌC TẬP -->
+    <section id="plans" class="view" hidden>
+      <div class="page-title">
+        <div><h1>Một lựa chọn cho mỗi nhu cầu</h1><div class="muted">Bắt đầu miễn phí. Mở rộng khi bạn sẵn sàng hoặc nhận miễn phí qua Bảng xếp hạng.</div></div>
+        <div class="switch"><button class="selected" data-cycle="month">Theo tháng</button><button data-cycle="year">Theo năm</button></div>
+      </div>
+      <div class="notice">Giá giả định theo phương án trong tài liệu, chưa phải dịch vụ thương mại. Sinh viên xuất sắc có thể nhận <strong>Gói Cá nhân hóa</strong> làm phần thưởng xếp hạng.</div>
+      <div class="pricing" id="pricing"></div>
+      <div class="panel" style="margin-top:23px">
+        <h3>Quyền lợi rõ ràng, không mua trùng</h3>
+        <p class="muted">Nếu giáo viên, tổ chức đã cấp quyền hoặc sinh viên đã nhận thưởng Gói Cá nhân hóa trên bảng xếp hạng, hệ thống tự động mở khóa quyền lợi mà không cần thanh toán thêm.</p>
+        <div class="sub">Mô hình doanh thu đề xuất: Freemium + Thuê bao định kỳ + Cho thuê sách số + Quảng cáo giáo dục.</div>
+      </div>
+    </section>
+
+    <!-- 9. QUẢN LÝ LỚP & GIAO BÀI TẬP CHO GIẢNG VIÊN (MỚI) -->
+    <section id="lecturer-manage" class="view" hidden>
+      <div class="page-title">
+        <div>
+          <span class="eyebrow">CÔNG CỤ GIẢNG DẠY & QUẢN LÝ LỚP</span>
+          <h1>Quản lý lớp học & Giao bài tập</h1>
+          <div class="muted">Tạo lớp mới, theo dõi danh sách sinh viên, chấm điểm và giao bài tập đồng bộ trực tiếp sang không gian Sinh viên.</div>
+        </div>
+        <button class="btn" id="add-lecturer-class-btn">+ Tạo lớp học mới</button>
+      </div>
+
+      <div class="columns">
+        <!-- Cột trái: Danh sách lớp học đang quản lý -->
+        <div>
+          <div class="section-head">
+            <h2>Danh sách các lớp đang phụ trách</h2>
+            <span class="sub" id="lecturer-class-total">3 lớp hoạt động</span>
+          </div>
+          <div class="gaplist" id="lecturer-classes-container"></div>
+
+          <div class="panel" style="margin-top:24px">
+            <div class="section-head">
+              <h2>Bài tập đã giao cho sinh viên</h2>
+              <span class="pill">Đồng bộ với tài khoản Sinh viên</span>
+            </div>
+            <div id="lecturer-assignments-list"></div>
+          </div>
+        </div>
+
+        <!-- Cột phải: Biểu mẫu Giao bài tập mới -->
+        <div class="panel" style="align-self:start">
+          <span class="pill">Giao bài tập mới</span>
+          <h2 style="margin:12px 0 6px">Tạo và phân phối bài tập</h2>
+          <p class="sub">Bài tập sau khi tạo sẽ xuất hiện ngay trong mục "Nhiệm vụ sắp tới" và "Bài tập & kiểm tra" của Sinh viên.</p>
+          <form id="create-assignment-form">
+            <label class="login-field" for="hw-title">Tên bài tập / Nhiệm vụ</label>
+            <input type="text" id="hw-title" placeholder="VD: Bài tập Hồi quy tuyến tính chương 4" required>
+
+            <label class="login-field" for="hw-class">Chọn lớp áp dụng</label>
+            <select id="hw-class" required></select>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div>
+                <label class="login-field" for="hw-due">Hạn nộp</label>
+                <input type="date" id="hw-due" value="2026-10-30" required>
+              </div>
+              <div>
+                <label class="login-field" for="hw-type">Hình thức</label>
+                <select id="hw-type">
+                  <option value="Trắc nghiệm & Tự luận">Trắc nghiệm & Tự luận</option>
+                  <option value="Bài tập thực hành">Bài tập thực hành</option>
+                  <option value="Tiểu luận / Báo cáo">Tiểu luận / Báo cáo</option>
+                </select>
+              </div>
+            </div>
+
+            <label class="login-field" for="hw-points">Điểm thưởng Xếp hạng khi hoàn thành</label>
+            <input type="number" id="hw-points" value="50" min="10" max="200">
+
+            <label class="login-field" for="hw-desc">Hướng dẫn / Yêu cầu chi tiết</label>
+            <textarea id="hw-desc" placeholder="Nhập yêu cầu bài làm, tài liệu tham khảo hoặc trang sách cần đọc..."></textarea>
+
+            <button class="btn" type="submit" style="width:100%">Giao bài tập cho lớp →</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. MÔ HÌNH DOANH THU TRONG QUYỀN ADMIN (MỚI) -->
+    <section id="admin-revenue" class="view" hidden>
+      <div class="page-title">
+        <div>
+          <span class="eyebrow">QUẢN TRỊ TÀI CHÍNH & KINH DOANH</span>
+          <h1>Mô hình doanh thu L-learning</h1>
+          <div class="muted">Phân tích đa nguồn thu, tỷ lệ chuyển đổi Freemium, chi phí cấp Gói thưởng xếp hạng và công cụ dự phóng doanh thu.</div>
+        </div>
+        <span class="pill">Quyền Quản trị viên (Admin)</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-icon">₫</div><div><strong id="rev-mrr">68,4 tr</strong><div class="sub">Doanh thu tháng (MRR ước tính)</div></div></div>
+        <div class="stat"><div class="stat-icon">↗</div><div><strong id="rev-arr">820,8 tr</strong><div class="sub">Doanh thu năm (ARR quy đổi)</div></div></div>
+        <div class="stat"><div class="stat-icon">📖</div><div><strong>11,2 tr</strong><div class="sub">Doanh thu thuê sách & tài liệu</div></div></div>
+        <div class="stat"><div class="stat-icon">★</div><div><strong id="rev-reward-count">45 gói</strong><div class="sub">Gói Cá nhân cấp qua Thưởng Xếp hạng</div></div></div>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px">
+        <div class="section-head">
+          <h2>Cơ cấu 5 dòng doanh thu cốt lõi</h2>
+          <span class="sub">Tỷ trọng đóng góp theo mô hình kinh doanh đề xuất</span>
+        </div>
+        <div class="rev-bar" role="img" aria-label="Cơ cấu doanh thu: Tổ chức B2B 38%, Cá nhân hóa B2C 28%, Giáo viên 14%, Thuê sách 12%, Quảng cáo giáo dục 8%">
+          <div class="rev-seg" style="width:38%;background:#236747">B2B Tổ chức 38%</div>
+          <div class="rev-seg" style="width:28%;background:#4a8c66">Gói Cá nhân 28%</div>
+          <div class="rev-seg" style="width:14%;background:#75ab88">Giáo viên 14%</div>
+          <div class="rev-seg" style="width:12%;background:#b88428">Thuê sách 12%</div>
+          <div class="rev-seg" style="width:8%;background:#8b7db1">Ads 8%</div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nguồn doanh thu</th>
+                <th>Đơn giá niêm yết</th>
+                <th>Quy mô hiện tại (Mẫu)</th>
+                <th>Doanh thu / tháng</th>
+                <th>Ghi chú vận hành</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Gói Tổ chức tiêu chuẩn (B2B)</strong></td>
+                <td>12.000.000đ / năm (1.000.000đ/tháng)</td>
+                <td>26 trường / trung tâm</td>
+                <td><strong>26.000.000đ</strong></td>
+                <td>Hợp đồng theo năm, ổn định dòng tiền</td>
+              </tr>
+              <tr>
+                <td><strong>2. Gói Cá nhân hóa (Sinh viên B2C)</strong></td>
+                <td>49.000đ / tháng · 490.000đ / năm</td>
+                <td>390 thuê bao trả phí (+45 gói thưởng)</td>
+                <td><strong>19.110.000đ</strong></td>
+                <td>Tăng chuyển đổi nhờ tặng gói dùng thử qua Xếp hạng</td>
+              </tr>
+              <tr>
+                <td><strong>3. Gói Giáo viên nâng cao</strong></td>
+                <td>99.000đ / tháng · 990.000đ / năm</td>
+                <td>96 giảng viên độc lập</td>
+                <td><strong>9.504.000đ</strong></td>
+                <td>Mở rộng tối đa 10 lớp, 300 học sinh/giảng viên</td>
+              </tr>
+              <tr>
+                <td><strong>4. Dịch vụ Thuê sách & Giáo trình số</strong></td>
+                <td>15.000đ – 55.000đ / lượt thuê</td>
+                <td>410 lượt thuê / tháng</td>
+                <td><strong>8.200.000đ</strong></td>
+                <td>Chia sẻ bản quyền với NXB & tác giả</td>
+              </tr>
+              <tr>
+                <td><strong>5. Quảng cáo Giáo dục định hướng</strong></td>
+                <td>CPC / Tài trợ khóa học kỹ năng</td>
+                <td>4 đối tác học thuật</td>
+                <td><strong>5.600.000đ</strong></td>
+                <td>Chỉ hiển thị ở tài khoản Miễn phí, không làm phiền</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Bộ mô phỏng doanh thu tương tác cho Admin -->
+      <div class="columns-equal">
+        <div class="panel">
+          <span class="pill">Công cụ mô phỏng tài chính</span>
+          <h2 style="margin:12px 0">Dự phóng doanh thu theo quy mô</h2>
+          <p class="sub">Điều chỉnh số lượng người dùng để ước tính tổng doanh thu hàng tháng của nền tảng:</p>
+          <label class="login-field">Số sinh viên mua Gói Cá nhân hóa (49.000đ/tháng): <strong id="sim-stu-val">390</strong></label>
+          <input type="range" id="sim-stu" min="50" max="2000" step="10" value="390" style="width:100%">
+
+          <label class="login-field">Số giảng viên mua Gói Nâng cao (99.000đ/tháng): <strong id="sim-lec-val">96</strong></label>
+          <input type="range" id="sim-lec" min="10" max="500" step="5" value="96" style="width:100%">
+
+          <label class="login-field">Số đơn vị mua Gói Tổ chức (1.000.000đ/tháng): <strong id="sim-org-val">26</strong></label>
+          <input type="range" id="sim-org" min="1" max="100" step="1" value="26" style="width:100%">
+
+          <label class="login-field">Số lượt thuê sách giáo trình / tháng (TB 20.000đ): <strong id="sim-book-val">410</strong></label>
+          <input type="range" id="sim-book" min="50" max="3000" step="20" value="410" style="width:100%">
+
+          <div class="detail" style="margin-top:14px">
+            <div class="row"><span>Tổng doanh thu tháng dự kiến:</span><strong style="font-size:20px;color:var(--green)" id="sim-total-month">68.414.000đ</strong></div>
+            <div class="row" style="margin-top:6px"><span>Doanh thu năm dự kiến (ARR):</span><strong id="sim-total-year">820.968.000đ</strong></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <span class="pill gold">Chiến lược Gamification & Giữ chân</span>
+          <h2 style="margin:12px 0">Hiệu quả từ Quỹ thưởng Gói Cá nhân hóa</h2>
+          <p class="muted">Việc trao thưởng <strong>Gói Cá nhân hóa</strong> cho sinh viên đứng đầu Bảng xếp hạng đóng vai trò là chi phí Marketing thu hút người dùng (CAC thấp):</p>
+          <div class="gaplist">
+            <div class="detail">
+              <strong>Tỷ lệ duy trì sau khi hết hạn gói thưởng: 64%</strong>
+              <div class="sub">Sinh viên quen sử dụng Bản đồ năng lực và Trợ lý AI có xu hướng tiếp tục gia hạn gói.</div>
+            </div>
+            <div class="detail">
+              <strong>Tác động lan tỏa trong lớp học</strong>
+              <div class="sub">Tăng 42% tỷ lệ hoàn thành bài tập đúng hạn do sinh viên tích điểm đua Top nhận gói miễn phí.</div>
+            </div>
+            <div class="detail">
+              <strong>Kiểm soát toàn diện cho Admin</strong>
+              <div class="sub">Từ thanh điều hướng bên trái, Admin có thể chuyển đổi và kiểm thử trực tiếp mọi phân hệ của Sinh viên, Giảng viên và Hệ thống.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. TRANG TỔNG QUAN THEO VAI TRÒ (ADMIN / GIẢNG VIÊN / PHỤ HUYNH) -->
+    <section id="role-home" class="view" hidden></section>
+
+    <footer class="footer">
+      <span>© L-learning · Không gian học tập cá nhân hóa.</span>
+      <span>Đồ án Nhóm 5 · Phiên bản nâng cấp đầy đủ tính năng</span>
+    </footer>
+  </div>
+</main>
+
+<!-- HỘP THOẠI MODAL DÙNG CHUNG -->
+<dialog id="modal">
+  <button class="close" aria-label="Đóng">×</button>
+  <div id="modal-body"></div>
+</dialog>
+
+<!-- THÔNG BÁO TOAST -->
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+let result = null, joined = false;
+try {
+  result = JSON.parse(localStorage.getItem('ll-result'));
+  joined = localStorage.getItem('ll-joined') === '1';
+} catch (e) {}
+
+// Danh mục tiêu đề tất cả các trang
+const titles = {
+  overview: 'Tổng quan Sinh viên',
+  classes: 'Lớp học của tôi',
+  practice: 'Bài tập & kiểm tra',
+  skills: 'Năng lực cá nhân',
+  books: 'Thư viện & Thuê sách',
+  'ai-helper': 'Trợ lý AI giải bài',
+  leaderboard: 'Bảng xếp hạng & Thưởng',
+  plans: 'Gói học tập',
+  'lecturer-manage': 'Quản lý lớp & Giao bài',
+  'admin-revenue': 'Mô hình doanh thu',
+  'role-home': 'Tổng quan vai trò'
+};
+
+// Quản lý tài khoản & mật khẩu (hỗ trợ đặt lại mật khẩu cho cả 4 đối tượng)
+const roleAccounts = {
+  admin: { label: 'Quản trị viên', email: 'admin@llearning.demo', initials: 'QT', pass: 'Demo@123' },
+  student: { label: 'Sinh viên', email: 'sinhvien@llearning.demo', initials: 'SV', pass: 'Demo@123' },
+  parent: { label: 'Phụ huynh', email: 'phuhuynh@llearning.demo', initials: 'PH', pass: 'Demo@123' },
+  lecturer: { label: 'Giảng viên', email: 'giangvien@llearning.demo', initials: 'GV', pass: 'Demo@123' }
+};
+
+try {
+  const savedPasses = JSON.parse(localStorage.getItem('ll-custom-passes') || '{}');
+  Object.keys(savedPasses).forEach(r => {
+    if (roleAccounts[r]) roleAccounts[r].pass = savedPasses[r];
+  });
+} catch (e) {}
+
+let selectedRole = 'student', activeRole = null;
+
+// Phân quyền điều hướng: Admin được xem TẤT CẢ chức năng
+window.roleRoute = function(id) {
+  if (!activeRole) return id;
+  if (activeRole === 'admin') return titles[id] ? id : 'role-home';
+  if (activeRole === 'student') {
+    if (id === 'lecturer-manage' || id === 'admin-revenue' || id === 'role-home') return 'overview';
+    return titles[id] ? id : 'overview';
+  }
+  if (activeRole === 'lecturer') {
+    const allowed = ['role-home', 'lecturer-manage', 'books', 'ai-helper', 'leaderboard', 'plans'];
+    return allowed.includes(id) ? id : 'role-home';
+  }
+  if (activeRole === 'parent') {
+    const allowed = ['role-home', 'books', 'leaderboard', 'plans'];
+    return allowed.includes(id) ? id : 'role-home';
+  }
+  return id;
+};
+
+function navigate(id) {
+  if (window.roleRoute) id = window.roleRoute(id);
+  if (!titles[id]) id = activeRole === 'student' ? 'overview' : 'role-home';
+  $$('.view').forEach(x => x.hidden = x.id !== id);
+  $$('nav button').forEach(x => x.classList.toggle('active', x.dataset.view === id));
+  $('#breadcrumb').textContent = titles[id];
+  history.replaceState(null, '', '#' + id);
+  window.scrollTo(0, 0);
+}
+
+document.addEventListener('click', e => {
+  let b = e.target.closest('[data-view]');
+  if (b) navigate(b.dataset.view);
+  if (e.target.closest('[data-quiz]')) startQuiz();
+  b = e.target.closest('[data-course]');
+  if (b) course(b.dataset.course);
+});
+
+const modal = $('#modal');
+function show(html) {
+  $('#modal-body').innerHTML = html;
+  if (!modal.open) modal.showModal();
+}
+$('.close').onclick = () => modal.close();
+modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+
+let toastTimer;
+function toast(t) {
+  $('#toast').textContent = t;
+  $('#toast').hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $('#toast').hidden = true, 4200);
+}
+
+// ============================================================================
+// 1. TÍNH NĂNG QUÊN MẬT KHẨU CHO CẢ 4 ĐỐI TƯỢNG
+// ============================================================================
+function openForgotPasswordModal(defaultRole = selectedRole) {
+  show(`
+    <span class="pill">Khôi phục tài khoản</span>
+    <h2 style="margin:14px 0 6px">Quên mật khẩu</h2>
+    <p class="sub">Chọn đối tượng tài khoản, xác thực mã OTP mô phỏng và đặt lại mật khẩu mới cho phiên làm việc của bạn.</p>
+    <form id="forgot-form">
+      <label class="login-field" for="fp-role">1. Chọn đối tượng tài khoản</label>
+      <select id="fp-role">
+        <option value="student" ${defaultRole === 'student' ? 'selected' : ''}>Sinh viên (sinhvien@llearning.demo)</option>
+        <option value="lecturer" ${defaultRole === 'lecturer' ? 'selected' : ''}>Giảng viên (giangvien@llearning.demo)</option>
+        <option value="parent" ${defaultRole === 'parent' ? 'selected' : ''}>Phụ huynh (phuhuynh@llearning.demo)</option>
+        <option value="admin" ${defaultRole === 'admin' ? 'selected' : ''}>Quản trị viên (admin@llearning.demo)</option>
+      </select>
+
+      <label class="login-field" for="fp-email">2. Email đăng ký của đối tượng</label>
+      <input type="email" id="fp-email" value="${roleAccounts[defaultRole].email}" required>
+
+      <div class="row">
+        <label class="login-field" for="fp-otp" style="margin:0">3. Mã xác thực OTP (Mã mẫu: <strong>123456</strong>)</label>
+        <button type="button" class="textbtn" id="send-otp-btn">Gửi mã OTP ↗</button>
+      </div>
+      <input type="text" id="fp-otp" placeholder="Nhập mã 6 số (123456)" value="123456" required>
+
+      <label class="login-field" for="fp-newpass">4. Mật khẩu mới</label>
+      <input type="text" id="fp-newpass" placeholder="Nhập mật khẩu mới (ít nhất 4 ký tự)" value="Moi@2026" required>
+
+      <p id="fp-msg" class="sub" style="color:var(--green)"></p>
+      <div class="row" style="margin-top:16px">
+        <button type="button" class="btn light" id="fp-reset-default">Khôi phục về Demo@123</button>
+        <button type="submit" class="btn">Cập nhật mật khẩu →</button>
+      </div>
+    </form>
+  `);
+
+  $('#fp-role').onchange = e => {
+    const r = e.target.value;
+    $('#fp-email').value = roleAccounts[r].email;
+  };
+
+  $('#send-otp-btn').onclick = () => {
+    $('#fp-otp').value = '123456';
+    $('#fp-msg').textContent = '✓ Đã gửi mã OTP mô phỏng (123456) tới email ' + $('#fp-email').value;
+  };
+
+  $('#fp-reset-default').onclick = () => {
+    const r = $('#fp-role').value;
+    roleAccounts[r].pass = 'Demo@123';
+    saveCustomPasswords();
+    selectRole(r);
+    modal.close();
+    toast(`Đã đặt lại mật khẩu ${roleAccounts[r].label} về mặc định: Demo@123`);
+  };
+
+  $('#forgot-form').onsubmit = e => {
+    e.preventDefault();
+    const r = $('#fp-role').value;
+    const email = $('#fp-email').value.trim().toLowerCase();
+    const otp = $('#fp-otp').value.trim();
+    const newPass = $('#fp-newpass').value.trim();
+
+    if (email !== roleAccounts[r].email) {
+      $('#fp-msg').style.color = '#a33c2d';
+      $('#fp-msg').textContent = 'Email không khớp với đối tượng đã chọn. Hãy dùng: ' + roleAccounts[r].email;
+      return;
+    }
+    if (otp !== '123456') {
+      $('#fp-msg').style.color = '#a33c2d';
+      $('#fp-msg').textContent = 'Mã OTP chưa đúng. Vui lòng nhập 123456 trong bản mẫu.';
+      return;
+    }
+    if (newPass.length < 4) {
+      $('#fp-msg').style.color = '#a33c2d';
+      $('#fp-msg').textContent = 'Mật khẩu mới cần có ít nhất 4 ký tự.';
+      return;
+    }
+
+    roleAccounts[r].pass = newPass;
+    saveCustomPasswords();
+    selectRole(r);
+    $('#login-email').value = roleAccounts[r].email;
+    $('#login-password').value = newPass;
+    modal.close();
+    toast(`Đổi mật khẩu thành công cho ${roleAccounts[r].label}! Mật khẩu mới đã được điền sẵn.`);
+  };
+}
+
+function saveCustomPasswords() {
+  try {
+    const map = {};
+    Object.keys(roleAccounts).forEach(k => map[k] = roleAccounts[k].pass);
+    localStorage.setItem('ll-custom-passes', JSON.stringify(map));
+  } catch (e) {}
+}
+
+$('#forgot-password-btn').onclick = () => openForgotPasswordModal(selectedRole);
+$('#forgot-quick-link').onclick = () => openForgotPasswordModal(selectedRole);
+
+// ============================================================================
+// 2. HỆ THỐNG LỚP HỌC & BÀI TẬP ĐỒNG BỘ GIẢNG VIÊN <-> SINH VIÊN
+// ============================================================================
+const defaultLecturerClasses = [
+  { id: 'c1', name: 'Phân tích dữ liệu', code: 'PTDL-01', chapters: 8, students: 32, submitted: 24, due: '20/10/2026', icon: '▥', desc: 'Thống kê mô tả · Làm sạch dữ liệu · Trực quan hóa · Hồi quy' },
+  { id: 'c2', name: 'Hệ thống thương mại điện tử', code: 'TMDT-02', chapters: 6, students: 28, submitted: 22, due: '22/10/2026', icon: '⌘', desc: 'Tổng quan hệ thống · Phân tích người dùng · Yêu cầu chức năng · Mô hình doanh thu' },
+  { id: 'c3', name: 'Kinh tế số', code: 'KTS-01', chapters: 7, students: 26, submitted: 19, due: '25/10/2026', icon: '◈', desc: 'Nền tảng số · Hiệu ứng mạng · Mô hình kinh doanh số' }
+];
+
+const defaultAssignments = [
+  { id: 'hw1', title: 'Ôn tập thống kê mô tả', className: 'Phân tích dữ liệu', due: '2026-10-20', type: 'Trắc nghiệm 3 câu', points: 40, desc: 'Làm 3 câu hỏi trắc nghiệm để kiểm tra kiến thức Trung bình, Trung vị và Biểu đồ.', isQuiz: true, done: false },
+  { id: 'hw2', title: 'Phân tích yêu cầu người dùng TMĐT', className: 'Hệ thống thương mại điện tử', due: '2026-10-25', type: 'Tự luận ngắn', points: 50, desc: 'Mô tả hành trình mua sắm và 3 yêu cầu chức năng cốt lõi của giỏ hàng.', isQuiz: false, done: false }
+];
+
+let lecturerClasses = [...defaultLecturerClasses];
+let assignmentsList = [...defaultAssignments];
+
+try {
+  const savedCls = JSON.parse(localStorage.getItem('ll-lec-classes'));
+  if (Array.isArray(savedCls) && savedCls.length) lecturerClasses = savedCls;
+  const savedHw = JSON.parse(localStorage.getItem('ll-assignments'));
+  if (Array.isArray(savedHw) && savedHw.length) assignmentsList = savedHw;
+} catch (e) {}
+
+function saveClassAndHw() {
+  try {
+    localStorage.setItem('ll-lec-classes', JSON.stringify(lecturerClasses));
+    localStorage.setItem('ll-assignments', JSON.stringify(assignmentsList));
+  } catch (e) {}
+}
+
+function drawClasses() {
+  const allStudentClasses = [...lecturerClasses];
+  if (joined && !allStudentClasses.some(c => c.name === 'Không gian tự học')) {
+    allStudentClasses.push({ id: 'c4', name: 'Không gian tự học', code: 'LLEARN', chapters: 3, students: 15, submitted: 15, icon: '✧', desc: 'Xác định mục tiêu · Ôn tập · Tự đánh giá' });
+  }
+  $('#class-count').textContent = allStudentClasses.length;
+  $('#class-list').innerHTML = allStudentClasses.map((c, i) => `
+    <article class="panel">
+      <span class="pill">${c.code === 'LLEARN' ? 'Vừa tham gia' : 'Lớp ' + c.code}</span>
+      <div style="font-size:38px;margin:22px 0;color:#6d9062">${c.icon || '▤'}</div>
+      <h2>${c.name}</h2>
+      <p class="sub">${c.chapters} chương · ${c.students} sinh viên</p>
+      <button class="btn light" data-course="${c.name}">Vào lớp →</button>
+    </article>
+  `).join('');
+}
+
+function course(n) {
+  const c = lecturerClasses.find(x => x.name === n) || { name: n, desc: 'Xác định mục tiêu · Ôn tập · Tự đánh giá' };
+  show(`
+    <span class="pill">Lớp học mẫu</span>
+    <h2 style="margin:15px 0">${c.name}</h2>
+    <div class="detail">
+      <h3>Nội dung học tập</h3>
+      <p>${c.desc}</p>
+    </div>
+    <p class="sub">Bạn có thể thuê giáo trình của môn học này trong mục Thư viện & Thuê sách.</p>
+    <div class="row" style="margin-top:16px">
+      <button class="btn light" id="go-book-from-course">📖 Thuê sách môn này</button>
+      ${n === 'Phân tích dữ liệu' ? '<button class="btn" data-quiz="1">Luyện tập thống kê →</button>' : ''}
+    </div>
+  `);
+  const gb = $('#go-book-from-course');
+  if (gb) gb.onclick = () => { modal.close(); navigate('books'); };
+}
+
+$('#join').onclick = () => {
+  show(`
+    <h2>Tham gia lớp học</h2>
+    <p class="muted">Nhập mã lớp mẫu <strong>LLEARN</strong>.</p>
+    <form id="join-form">
+      <label for="code">Mã lớp</label>
+      <input id="code" type="text" required placeholder="Nhập mã lớp">
+      <p id="join-error" role="alert" style="color:#a04b36"></p>
+      <button class="btn">Tham gia lớp</button>
+    </form>
+  `);
+  $('#join-form').onsubmit = e => {
+    e.preventDefault();
+    if ($('#code').value.trim().toUpperCase() !== 'LLEARN') {
+      $('#join-error').textContent = 'Mã chưa đúng. Hãy dùng LLEARN trong bản mẫu.';
+      return;
+    }
+    joined = true;
+    try { localStorage.setItem('ll-joined', '1'); } catch (e) {}
+    drawClasses();
+    modal.close();
+    toast('Bạn đã tham gia lớp Không gian tự học.');
+  };
+};
+
+// Hiển thị bài tập ở cả Tổng quan Sinh viên, Bài tập Sinh viên và Quản lý Giảng viên
+function renderAssignmentsEverywhere() {
+  $('#overview-task-count').textContent = assignmentsList.length + ' nhiệm vụ';
+  $('#student-tasks-list').innerHTML = assignmentsList.map(hw => `
+    <div class="task">
+      <div class="task-icon">${hw.done ? '✓' : '▧'}</div>
+      <div class="task-info">
+        <h3 style="font-size:13px">${hw.title}</h3>
+        <div class="sub">${hw.className} · Hạn: ${hw.due} · +${hw.points} điểm xếp hạng</div>
+      </div>
+      ${hw.isQuiz
+        ? `<button class="btn light small" data-quiz="1">Làm bài</button>`
+        : hw.done
+          ? `<span class="pill">Đã nộp ✓</span>`
+          : `<button class="btn light small" data-submit-hw="${hw.id}">Nộp bài</button>`
+      }
+    </div>
+  `).join('');
+
+  $('#practice-assigned-list').innerHTML = assignmentsList.map(hw => `
+    <div class="role-record">
+      <div class="row">
+        <div>
+          <h3>${hw.title} <span class="pill" style="margin-left:6px">${hw.type}</span></h3>
+          <div class="sub">Lớp: <strong>${hw.className}</strong> · Hạn nộp: ${hw.due} · Thưởng: +${hw.points} điểm</div>
+          <p class="sub" style="margin:6px 0 0">${hw.desc}</p>
+        </div>
+        <div>
+          ${hw.isQuiz
+            ? `<button class="btn small" data-quiz="1">Làm trắc nghiệm →</button>`
+            : hw.done
+              ? `<span class="pill">Đã hoàn thành ✓</span>`
+              : `<button class="btn light small" data-submit-hw="${hw.id}">Nộp bài tự luận →</button>`
+          }
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Cập nhật giao diện của Giảng viên
+  const lecSelect = $('#hw-class');
+  if (lecSelect) {
+    lecSelect.innerHTML = lecturerClasses.map(c => `<option value="${c.name}">${c.name} (${c.code})</option>`).join('');
+  }
+  const lecClassBox = $('#lecturer-classes-container');
+  if (lecClassBox) {
+    $('#lecturer-class-total').textContent = lecturerClasses.length + ' lớp đang phụ trách';
+    lecClassBox.innerHTML = lecturerClasses.map(c => `
+      <div class="panel">
+        <div class="row">
+          <div>
+            <span class="pill">Mã lớp: ${c.code}</span>
+            <h3 style="margin-top:10px;font-size:17px">${c.icon || '▤'} ${c.name}</h3>
+            <div class="sub">${c.students} sinh viên · Đã nộp bài: <strong>${c.submitted}/${c.students}</strong> · Hạn gần nhất: ${c.due}</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn light small" data-manage-roster="${c.id}">Danh sách SV & Chấm bài</button>
+          </div>
+        </div>
+        <div class="progress" style="margin:12px 0 4px"><span style="width:${Math.round((c.submitted/c.students)*100)}%"></span></div>
+      </div>
+    `).join('');
+  }
+  const lecHwList = $('#lecturer-assignments-list');
+  if (lecHwList) {
+    lecHwList.innerHTML = assignmentsList.map(hw => `
+      <div class="role-record">
+        <div class="row">
+          <div>
+            <strong>${hw.title}</strong>
+            <div class="sub">${hw.className} · Hình thức: ${hw.type} · Hạn: ${hw.due} · (+${hw.points}đ)</div>
+          </div>
+          <button class="textbtn" data-delete-hw="${hw.id}" style="color:#a33c2d">Xóa</button>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+// Sinh viên nộp bài tự luận
+document.addEventListener('click', e => {
+  const subBtn = e.target.closest('[data-submit-hw]');
+  if (subBtn) {
+    const hw = assignmentsList.find(x => x.id === subBtn.dataset.submitHw);
+    if (!hw) return;
+    show(`
+      <span class="pill">${hw.className}</span>
+      <h2 style="margin:14px 0 6px">Nộp bài: ${hw.title}</h2>
+      <p class="sub">${hw.desc}</p>
+      <form id="submit-hw-form">
+        <label class="login-field">Nội dung bài làm hoặc đường dẫn tài liệu của bạn</label>
+        <textarea required placeholder="Nhập câu trả lời tóm tắt hoặc dán link bài làm..."></textarea>
+        <button class="btn" type="submit" style="width:100%">Xác nhận nộp bài & Nhận +${hw.points} điểm →</button>
+      </form>
+    `);
+    $('#submit-hw-form').onsubmit = ev => {
+      ev.preventDefault();
+      hw.done = true;
+      addPoints(hw.points);
+      saveClassAndHw();
+      renderAssignmentsEverywhere();
+      modal.close();
+      toast(`Đã nộp bài "${hw.title}" thành công! Bạn nhận được +${hw.points} điểm xếp hạng.`);
+    };
+  }
+
+  // Giảng viên xóa bài tập
+  const delBtn = e.target.closest('[data-delete-hw]');
+  if (delBtn) {
+    assignmentsList = assignmentsList.filter(x => x.id !== delBtn.dataset.deleteHw);
+    saveClassAndHw();
+    renderAssignmentsEverywhere();
+    toast('Đã xóa bài tập khỏi danh sách.');
+  }
+
+  // Giảng viên xem danh sách sinh viên & chấm bài
+  const rosterBtn = e.target.closest('[data-manage-roster]');
+  if (rosterBtn) {
+    const cls = lecturerClasses.find(c => c.id === rosterBtn.dataset.manageRoster);
+    if (!cls) return;
+    show(`
+      <span class="pill">Quản lý lớp · ${cls.code}</span>
+      <h2 style="margin:14px 0">${cls.name}</h2>
+      <p class="sub"> Sĩ số: ${cls.students} sinh viên · Đã nộp bài: ${cls.submitted}/${cls.students}</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Sinh viên</th><th>Trạng thái bài tập</th><th>Điểm số</th><th>Thao tác</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nguyễn Minh Anh</strong></td><td><span class="pill">Đã nộp</span></td><td><strong>8.5</strong></td><td><button class="textbtn" onclick="toast('Đã gửi nhận xét cho Nguyễn Minh Anh')">Nhận xét</button></td></tr>
+            <tr><td><strong>Trần Quốc Bảo</strong></td><td><span class="pill">Đã nộp</span></td><td><strong>9.0</strong></td><td><button class="textbtn" onclick="toast('Đã gửi nhận xét cho Trần Quốc Bảo')">Nhận xét</button></td></tr>
+            <tr><td><strong>Lê Hoàng Châu</strong></td><td><span class="pill warn">Chờ chấm</span></td><td><input type="number" id="quick-grade-val" value="8.0" step="0.5" min="0" max="10" style="width:70px;margin:0;padding:4px 8px"></td><td><button class="btn small" id="quick-grade-btn">Lưu điểm</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    `);
+    const qg = $('#quick-grade-btn');
+    if (qg) qg.onclick = () => {
+      cls.submitted = Math.min(cls.students, cls.submitted + 1);
+      saveClassAndHw();
+      renderAssignmentsEverywhere();
+      modal.close();
+      toast(`Đã chấm điểm (${$('#quick-grade-val').value}đ) cho sinh viên Lê Hoàng Châu!`);
+    };
+  }
+});
+
+// Giảng viên giao bài tập mới
+$('#create-assignment-form').onsubmit = e => {
+  e.preventDefault();
+  const newHw = {
+    id: 'hw_' + Date.now(),
+    title: $('#hw-title').value.trim(),
+    className: $('#hw-class').value,
+    due: $('#hw-due').value,
+    type: $('#hw-type').value,
+    points: Number($('#hw-points').value) || 50,
+    desc: $('#hw-desc').value.trim() || 'Hoàn thành theo hướng dẫn trên lớp của giảng viên.',
+    isQuiz: false,
+    done: false
+  };
+  assignmentsList.unshift(newHw);
+  saveClassAndHw();
+  renderAssignmentsEverywhere();
+  e.target.reset();
+  $('#hw-due').value = '2026-10-30';
+  $('#hw-points').value = '50';
+  toast(`Đã giao bài tập "${newHw.title}" cho lớp ${newHw.className}!`);
+};
+
+// Giảng viên tạo lớp mới
+$('#add-lecturer-class-btn').onclick = () => {
+  show(`
+    <span class="pill">Giảng viên & Quản trị</span>
+    <h2 style="margin:14px 0">Tạo lớp học phần mới</h2>
+    <form id="new-class-form">
+      <label class="login-field">Tên môn học / Lớp học</label>
+      <input type="text" id="nc-name" placeholder="VD: Trí tuệ nhân tạo trong Kinh doanh" required>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><label class="login-field">Mã lớp</label><input type="text" id="nc-code" placeholder="VD: AIKD-01" required></div>
+        <div><label class="login-field">Số chương</label><input type="number" id="nc-chap" value="6" min="1"></div>
+      </div>
+      <label class="login-field">Đề cương tóm tắt</label>
+      <input type="text" id="nc-desc" value="Khái niệm nền tảng · Ứng dụng thực tiễn · Đồ án môn học">
+      <button class="btn" type="submit" style="width:100%">Tạo lớp học →</button>
+    </form>
+  `);
+  $('#new-class-form').onsubmit = e => {
+    e.preventDefault();
+    const nc = {
+      id: 'c_' + Date.now(),
+      name: $('#nc-name').value.trim(),
+      code: $('#nc-code').value.trim().toUpperCase(),
+      chapters: Number($('#nc-chap').value) || 6,
+      students: 25,
+      submitted: 0,
+      due: '05/11/2026',
+      icon: '✦',
+      desc: $('#nc-desc').value.trim()
+    };
+    lecturerClasses.push(nc);
+    saveClassAndHw();
+    drawClasses();
+    renderAssignmentsEverywhere();
+    modal.close();
+    toast(`Đã tạo lớp học "${nc.name}" (${nc.code}) thành công!`);
+  };
+};
+
+// ============================================================================
+// 3. THƯ VIỆN & THUÊ SÁCH GIÁO TRÌNH
+// ============================================================================
+const bookCatalog = [
+  { id: 'b1', title: 'Giáo trình Phân tích dữ liệu với Python', author: 'PGS.TS Nguyễn Văn Minh', cat: 'data', price7: 15000, price30: 39000, pages: 320, coverClass: '', preview: 'Chương 1: Làm quen với Pandas & NumPy. Chương 2: Thống kê mô tả (Trung bình, Trung vị, Độ lệch chuẩn). Chương 3: Làm sạch dữ liệu khuyết thiếu và xử lý ngoại lệ (Outliers).' },
+  { id: 'b2', title: 'Hệ thống Thương mại điện tử Hiện đại', author: 'TS. Trần Thị Thu Hà', cat: 'biz', price7: 15000, price30: 35000, pages: 285, coverClass: 'alt1', preview: 'Chương 1: Các mô hình B2B, B2C, C2C, B2G. Chương 2: Kiến trúc hệ thống thanh toán số và bảo mật giao dịch. Chương 3: Phân tích hành vi khách hàng trực tuyến.' },
+  { id: 'b3', title: 'Nhập môn Hồi quy & Học máy ứng dụng', author: 'TS. Lê Hoàng Nam', cat: 'data', price7: 18000, price30: 45000, pages: 410, coverClass: 'alt3', preview: 'Chương 1: Hồi quy tuyến tính đơn biến (Y = aX + b). Chương 2: Đánh giá sai số MSE và hệ số xác định R². Chương 3: Phân loại dữ liệu cơ bản.' },
+  { id: 'b4', title: 'Kinh tế số & Chiến lược Mô hình Nền tảng', author: 'GS. Phạm Quốc Tuấn', cat: 'biz', price7: 14000, price30: 32000, pages: 260, coverClass: 'alt2', preview: 'Chương 1: Hiệu ứng mạng lưới hai chiều (Two-sided Network Effects). Chương 2: Chiến lược định giá Freemium và Thuê bao định kỳ.' },
+  { id: 'b5', title: 'Xác suất Thống kê trong Kinh doanh', author: 'ThS. Đỗ Thanh Tùng', cat: 'data', price7: 12000, price30: 29000, pages: 245, coverClass: '', preview: 'Chương 1: Biến cố và Xác suất cổ điển. Chương 2: Công thức xác suất có điều kiện và Định lý Bayes. Chương 3: Kiểm định giả thuyết thống kê.' },
+  { id: 'b6', title: 'Kỹ năng Trực quan hóa Dữ liệu (Data Storytelling)', author: 'Chuyên gia Vũ Mai Anh', cat: 'biz', price7: 16000, price30: 38000, pages: 210, coverClass: 'alt1', preview: 'Chương 1: Nguyên tắc chọn biểu đồ (Cột, Đường, Phân tán, Cơ cấu). Chương 2: Thiết kế Dashboard truyền tải thông điệp quản trị.' }
+];
+
+let rentedBooks = [
+  { id: 'b1', days: 14, dueDate: '02/11/2026', format: 'Sách điện tử (E-book)' }
+];
+try {
+  const savedRents = JSON.parse(localStorage.getItem('ll-rented-books'));
+  if (Array.isArray(savedRents)) rentedBooks = savedRents;
+} catch (e) {}
+
+let currentBookFilter = 'all';
+
+function renderBooks() {
+  const hasPersonalPlan = isPersonalPlanActive();
+  $('#rented-stat-count').textContent = rentedBooks.length;
+  $('#rented-books-badge').textContent = rentedBooks.length + ' cuốn đang thuê';
+
+  if (rentedBooks.length === 0) {
+    $('#my-rented-books').innerHTML = `<div class="empty muted">Bạn chưa thuê cuốn sách nào. Hãy chọn một giáo trình bên dưới để thuê.</div>`;
+  } else {
+    $('#my-rented-books').innerHTML = `<div class="grid3">` + rentedBooks.map(r => {
+      const b = bookCatalog.find(x => x.id === r.id);
+      if (!b) return '';
+      return `
+        <div class="detail">
+          <span class="pill">${r.format}</span>
+          <h3 style="margin-top:10px">${b.title}</h3>
+          <div class="sub">Tác giả: ${b.author}</div>
+          <div class="sub" style="margin-top:4px">Hạn trả: <strong>${r.dueDate}</strong> (${r.days} ngày)</div>
+          <div class="row" style="margin-top:12px">
+            <button class="btn small" data-read-book="${b.id}">Đọc sách →</button>
+            <button class="btn light small" data-return-book="${b.id}">Trả sách</button>
+          </div>
+        </div>
+      `;
+    }).join('') + `</div>`;
+  }
+
+  const filtered = bookCatalog.filter(b => currentBookFilter === 'all' || b.cat === currentBookFilter);
+  $('#book-catalog').innerHTML = filtered.map(b => {
+    const isRented = rentedBooks.some(r => r.id === b.id);
+    const p7 = hasPersonalPlan ? 0 : b.price7;
+    const p30 = hasPersonalPlan ? Math.round(b.price30 / 2) : b.price30;
+    return `
+      <article class="book-card">
+        <div>
+          <div class="book-cover ${b.coverClass}">
+            <span>L-LEARNING LIBRARY · ${b.pages} TRANG</span>
+            <b>${b.title}</b>
+            <i>📖</i>
+          </div>
+          <div class="sub">${b.author}</div>
+          <div style="margin:10px 0;font-size:12.5px">
+            <div>Thuê 7 ngày: <strong style="color:var(--green)">${p7 === 0 ? 'Miễn phí (Gói Cá nhân)' : p7.toLocaleString('vi-VN') + 'đ'}</strong></div>
+            <div>Thuê 30 ngày: <strong>${p30.toLocaleString('vi-VN')}đ</strong> ${hasPersonalPlan ? '<span class="pill gold">Đã giảm 50%</span>' : ''}</div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn light small" data-read-book="${b.id}">Đọc thử</button>
+          ${isRented
+            ? `<span class="pill">Đang thuê ✓</span>`
+            : `<button class="btn small" data-rent-modal="${b.id}">Thuê sách →</button>`
+          }
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+document.addEventListener('click', e => {
+  const catBtn = e.target.closest('[data-book-cat]');
+  if (catBtn) {
+    currentBookFilter = catBtn.dataset.bookCat;
+    $$('[data-book-cat]').forEach(x => x.classList.toggle('selected', x === catBtn));
+    renderBooks();
+  }
+
+  const rentBtn = e.target.closest('[data-rent-modal]');
+  if (rentBtn) {
+    const b = bookCatalog.find(x => x.id === rentBtn.dataset.rentModal);
+    if (!b) return;
+    const hasPersonal = isPersonalPlanActive();
+    show(`
+      <span class="pill">Thuê giáo trình</span>
+      <h2 style="margin:14px 0 6px">${b.title}</h2>
+      <p class="sub">${b.author} · ${b.pages} trang</p>
+      <form id="rent-book-form">
+        <label class="login-field">Chọn hình thức sách</label>
+        <select id="rent-format">
+          <option value="Sách điện tử (E-book)">Sách điện tử (E-book đọc ngay trên web)</option>
+          <option value="Sách in (Nhận tại thư viện)">Sách in (Nhận tại thư viện trường)</option>
+        </select>
+        <label class="login-field">Thời hạn thuê</label>
+        <select id="rent-days">
+          <option value="7">7 ngày — ${hasPersonal ? '0đ (Miễn phí Gói Cá nhân hóa)' : b.price7.toLocaleString('vi-VN') + 'đ'}</option>
+          <option value="14">14 ngày — ${(hasPersonal ? Math.round(b.price7 * 0.8) : b.price7 * 1.6).toLocaleString('vi-VN')}đ</option>
+          <option value="30">30 ngày — ${(hasPersonal ? Math.round(b.price30 / 2) : b.price30).toLocaleString('vi-VN')}đ</option>
+          <option value="90">Trọn học kỳ (90 ngày) — ${(hasPersonal ? b.price30 : b.price30 * 2).toLocaleString('vi-VN')}đ</option>
+        </select>
+        <div class="detail" style="margin:12px 0">
+          🎁 Bạn nhận thêm <strong>+30 điểm xếp hạng</strong> khi thuê và đọc giáo trình học thuật.
+        </div>
+        <button class="btn" type="submit" style="width:100%">Xác nhận thuê sách →</button>
+      </form>
+    `);
+    $('#rent-book-form').onsubmit = ev => {
+      ev.preventDefault();
+      const days = Number($('#rent-days').value);
+      const due = new Date(2026, 9, 19 + days);
+      const dueStr = `${String(due.getDate()).padStart(2,'0')}/${String(due.getMonth()+1).padStart(2,'0')}/${due.getFullYear()}`;
+      rentedBooks.push({ id: b.id, days, dueDate: dueStr, format: $('#rent-format').value });
+      try { localStorage.setItem('ll-rented-books', JSON.stringify(rentedBooks)); } catch (err) {}
+      addPoints(30);
+      renderBooks();
+      modal.close();
+      toast(`Thuê thành công "${b.title}" (+30 điểm xếp hạng)!`);
+    };
+  }
+
+  const readBtn = e.target.closest('[data-read-book]');
+  if (readBtn) {
+    const b = bookCatalog.find(x => x.id === readBtn.dataset.readBook);
+    if (!b) return;
+    show(`
+      <span class="pill">Trình đọc sách L-learning Reader</span>
+      <h2 style="margin:14px 0 6px">${b.title}</h2>
+      <div class="sub" style="margin-bottom:14px">Tác giả: ${b.author}</div>
+      <div class="detail" style="line-height:1.75;font-size:13.5px">
+        <strong>Trích đoạn nội dung trọng tâm:</strong>
+        <p>${b.preview}</p>
+        <p class="sub">💡 Mẹo học tập: Bạn có thể bấm sang mục "Trợ lý AI giải bài" để nhờ AI tóm tắt công thức hoặc giải bài tập trong chương này.</p>
+      </div>
+    `);
+  }
+
+  const retBtn = e.target.closest('[data-return-book]');
+  if (retBtn) {
+    rentedBooks = rentedBooks.filter(r => r.id !== retBtn.dataset.returnBook);
+    try { localStorage.setItem('ll-rented-books', JSON.stringify(rentedBooks)); } catch (err) {}
+    renderBooks();
+    toast('Đã hoàn trả sách về thư viện.');
+  }
+});
+
+// ============================================================================
+// 4. TRỢ LÝ AI GIẢI BÀI CƠ BẢN
+// ============================================================================
+const initialAiMessages = [
+  { role: 'ai', html: 'Xin chào! Mình là <strong>L-AI</strong> — Trợ lý học tập của bạn. Bạn có thể gửi dãy số để tính <em>Trung bình, Trung vị, Phương sai</em>, gửi phương trình <em>ax² + bx + c = 0</em> hoặc hỏi lý thuyết các môn Phân tích dữ liệu, Thương mại điện tử, Kinh tế số nhé!' }
+];
+let aiMessages = [...initialAiMessages];
+
+function renderAiChat() {
+  const box = $('#ai-chat-box');
+  if (!box) return;
+  box.innerHTML = aiMessages.map(m => `<div class="msg ${m.role}">${m.html}</div>`).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+function solveStatsFromNumbers(nums) {
+  if (!nums.length) return null;
+  const n = nums.length;
+  const sorted = [...nums].sort((a, b) => a - b);
+  const sum = nums.reduce((a, b) => a + b, 0);
+  const mean = sum / n;
+  const mid = Math.floor(n / 2);
+  const median = n % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  const variance = nums.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / n;
+  const stdDev = Math.sqrt(variance);
+  return {
+    n, sorted, sum,
+    mean: Number(mean.toFixed(2)),
+    median: Number(median.toFixed(2)),
+    variance: Number(variance.toFixed(2)),
+    stdDev: Number(stdDev.toFixed(2))
+  };
+}
+
+function generateAiReply(query) {
+  const q = query.trim();
+  const lower = q.toLowerCase();
+
+  // Kiểm tra nếu câu hỏi chứa từ 3 số trở lên -> tự động giải thống kê
+  const nums = (q.match(/-?\d+(\.\d+)?/g) || []).map(Number);
+  if ((lower.includes('trung bình') || lower.includes('trung vị') || lower.includes('thống kê') || lower.includes('dãy')) && nums.length >= 3) {
+    const st = solveStatsFromNumbers(nums);
+    return `
+      <strong>📊 Lời giải Thống kê mô tả từng bước:</strong><br>
+      • <strong>Bước 1 (Sắp xếp dãy tăng dần):</strong> ${st.sorted.join(', ')} (Số quan sát n = ${st.n})<br>
+      • <strong>Bước 2 (Trung bình cộng):</strong> (${nums.join(' + ')}) / ${st.n} = <strong>${st.mean}</strong><br>
+      • <strong>Bước 3 (Trung vị - Median):</strong> Giá trị chính giữa của dãy đã sắp xếp là <strong>${st.median}</strong><br>
+      • <strong>Bước 4 (Phương sai & Độ lệch chuẩn):</strong> σ² = <strong>${st.variance}</strong> · Độ lệch chuẩn σ = <strong>${st.stdDev}</strong>
+    `;
+  }
+
+  if (lower.includes('x^2 - 5x + 6') || lower.includes('x² - 5x + 6')) {
+    return `
+      <strong>📐 Giải phương trình bậc hai: x² - 5x + 6 = 0</strong><br>
+      • Hệ số: a = 1, b = -5, c = 6<br>
+      • Tính biệt thức Δ = b² - 4ac = (-5)² - 4(1)(6) = 25 - 24 = <strong>1 > 0</strong><br>
+      • Phương trình có 2 nghiệm phân biệt:<br>
+      &nbsp;&nbsp;x₁ = (-b + √Δ) / 2a = (5 + 1) / 2 = <strong>3</strong><br>
+      &nbsp;&nbsp;x₂ = (-b - √Δ) / 2a = (5 - 1) / 2 = <strong>2</strong>
+    `;
+  }
+
+  if (lower.includes('hồi quy')) {
+    return `
+      <strong>📈 Giải thích Hồi quy tuyến tính (Linear Regression):</strong><br>
+      • <strong>Khái niệm:</strong> Mô hình dự báo biến phụ thuộc <strong>Y</strong> (ví dụ: Doanh thu) dựa trên biến độc lập <strong>X</strong> (ví dụ: Chi phí quảng cáo) theo phương trình đường thẳng: <strong>Y = β₀ + β₁X + ε</strong>.<br>
+      • <strong>Trong đó:</strong> β₀ là tung độ gốc (giá trị Y khi X = 0), β₁ là hệ số góc (khi X tăng 1 đơn vị thì Y thay đổi trung bình β₁ đơn vị).
+    `;
+  }
+
+  if (lower.includes('b2b') || lower.includes('b2c') || lower.includes('tmđt')) {
+    return `
+      <strong>🛒 Phân biệt các mô hình Thương mại điện tử cơ bản:</strong><br>
+      • <strong>B2B (Business to Business):</strong> Giao dịch giữa doanh nghiệp với doanh nghiệp (VD: Alibaba, cung ứng nguyên vật liệu sỉ).<br>
+      • <strong>B2C (Business to Consumer):</strong> Doanh nghiệp bán trực tiếp cho người tiêu dùng cuối.<br>
+      • <strong>C2C (Consumer to Consumer):</strong> Người tiêu dùng giao dịch với nhau qua sàn trung gian (VD: Chợ Tốt, Shopee cá nhân).
+    `;
+  }
+
+  if (lower.includes('xác suất') || lower.includes('bayes')) {
+    return `
+      <strong>🎲 Công thức Xác suất có điều kiện & Bayes:</strong><br>
+      • Xác suất của biến cố A khi biết biến cố B đã xảy ra:<br>
+      &nbsp;&nbsp;<strong>P(A | B) = P(A ∩ B) / P(B)</strong> (với P(B) > 0)<br>
+      • Ứng dụng: Dự đoán khả năng khách hàng mua hàng (A) khi biết khách đã xem trang sản phẩm (B).
+    `;
+  }
+
+  // Kiểm tra phép tính số học đơn giản
+  if (/^[\d\s+\-*/().]+$/.test(q)) {
+    try {
+      const val = Function('"use strict";return (' + q + ')')();
+      return `Kết quả phép tính <strong>${q}</strong> = <strong>${Number(val.toFixed(4))}</strong>`;
+    } catch (e) {}
+  }
+
+  return `
+    <strong>✦ Gợi ý từ Trợ lý L-AI:</strong><br>
+    Với câu hỏi <em>"${q}"</em>, bạn nên chia nhỏ vấn đề thành 3 bước: (1) Xác định biến số/khái niệm đầu vào, (2) Áp dụng công thức chuẩn trong giáo trình, và (3) Kiểm tra lại đơn vị. Bạn cũng có thể dùng <strong>2 công cụ giải nhanh bên phải</strong> để tính toán số liệu chính xác!
+  `;
+}
+
+$('#ai-chat-form').onsubmit = e => {
+  e.preventDefault();
+  const inp = $('#ai-user-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  aiMessages.push({ role: 'user', html: text });
+  aiMessages.push({ role: 'ai', html: generateAiReply(text) });
+  inp.value = '';
+  renderAiChat();
+};
+
+document.addEventListener('click', e => {
+  const chip = e.target.closest('[data-ai-prompt]');
+  if (chip) {
+    const prompt = chip.dataset.aiPrompt;
+    aiMessages.push({ role: 'user', html: prompt });
+    aiMessages.push({ role: 'ai', html: generateAiReply(prompt) });
+    renderAiChat();
+  }
+});
+
+$('#clear-ai-chat').onclick = () => {
+  aiMessages = [...initialAiMessages];
+  renderAiChat();
+};
+
+// Công cụ 1: Giải thống kê bên phải
+function runStatTool() {
+  const raw = $('#ai-stat-input').value;
+  const nums = (raw.match(/-?\d+(\.\d+)?/g) || []).map(Number);
+  const out = $('#ai-stat-output');
+  if (nums.length < 2) {
+    out.innerHTML = 'Vui lòng nhập ít nhất 2 số hợp lệ.';
+    return;
+  }
+  const st = solveStatsFromNumbers(nums);
+  out.innerHTML = `
+    <div>• Dãy sắp xếp (n=${st.n}): <strong>${st.sorted.join(', ')}</strong></div>
+    <div>• Tổng = <strong>${st.sum}</strong> → Trung bình cộng (Mean) = <strong>${st.mean}</strong></div>
+    <div>• Trung vị (Median) = <strong>${st.median}</strong></div>
+    <div>• Phương sai = <strong>${st.variance}</strong> · Độ lệch chuẩn = <strong>${st.stdDev}</strong></div>
+  `;
+}
+$('#ai-stat-solve').onclick = runStatTool;
+
+// Công cụ 2: Giải phương trình bậc 1 & bậc 2
+function runEqTool() {
+  const a = parseFloat($('#eq-a').value) || 0;
+  const b = parseFloat($('#eq-b').value) || 0;
+  const c = parseFloat($('#eq-c').value) || 0;
+  const out = $('#ai-eq-output');
+
+  if (a === 0) {
+    if (b === 0) {
+      out.innerHTML = c === 0 ? 'Phương trình có vô số nghiệm.' : 'Phương trình vô nghiệm.';
+    } else {
+      const x = -c / b;
+      out.innerHTML = `Phương trình bậc nhất <strong>${b}x + (${c}) = 0</strong><br>→ Nghiệm duy nhất: <strong>x = ${Number(x.toFixed(4))}</strong>`;
+    }
+    return;
+  }
+  const delta = b * b - 4 * a * c;
+  if (delta < 0) {
+    out.innerHTML = `Phương trình <strong>${a}x² + (${b})x + (${c}) = 0</strong><br>• Biệt thức Δ = b² - 4ac = <strong>${Number(delta.toFixed(2))} < 0</strong><br>→ Phương trình vô nghiệm thực.`;
+  } else if (delta === 0) {
+    const x = -b / (2 * a);
+    out.innerHTML = `• Biệt thức Δ = <strong>0</strong><br>→ Phương trình có nghiệm kép: <strong>x₁ = x₂ = ${Number(x.toFixed(4))}</strong>`;
+  } else {
+    const x1 = (-b + Math.sqrt(delta)) / (2 * a);
+    const x2 = (-b - Math.sqrt(delta)) / (2 * a);
+    out.innerHTML = `• Biệt thức Δ = b² - 4ac = <strong>${Number(delta.toFixed(2))} > 0</strong><br>→ Hai nghiệm phân biệt: <strong>x₁ = ${Number(x1.toFixed(4))}</strong> ; <strong>x₂ = ${Number(x2.toFixed(4))}</strong>`;
+  }
+}
+$('#ai-eq-solve').onclick = runEqTool;
+
+// ============================================================================
+// 5. BẢNG XẾP HẠNG & PHẦN THƯỞNG GÓI CÁ NHÂN HÓA
+// ============================================================================
+let userPoints = 460;
+let personalPlanRewarded = false;
+try {
+  const sp = Number(localStorage.getItem('ll-points'));
+  if (!isNaN(sp) && sp >= 460) userPoints = sp;
+  personalPlanRewarded = localStorage.getItem('ll-reward-personal') === '1';
+} catch (e) {}
+
+function isPersonalPlanActive() {
+  return personalPlanRewarded;
+}
+
+function addPoints(pts) {
+  userPoints += pts;
+  try { localStorage.setItem('ll-points', String(userPoints)); } catch (e) {}
+  renderLeaderboardAndReward();
+}
+
+function renderLeaderboardAndReward() {
+  $('#points-stat-count').innerHTML = `${userPoints} <span style="font-size:12px;font-weight:400">điểm</span>`;
+  $('#my-rank-points').textContent = `${userPoints} điểm`;
+  $('#reward-header-pill').hidden = !personalPlanRewarded;
+
+  if (personalPlanRewarded) {
+    $('#profile-plan-badge').innerHTML = `<span style="color:var(--gold);font-weight:700">★ Gói Cá nhân hóa (Thưởng)</span>`;
+    $('#sidebar-plan-title').textContent = '★ Gói Cá nhân hóa đã mở';
+    $('#sidebar-plan-desc').textContent = 'Bạn đã nhận thưởng Gói Cá nhân hóa từ Bảng xếp hạng!';
+    $('#my-reward-status').innerHTML = `<span class="pill gold">Đã kích hoạt Gói Cá nhân hóa ✓</span>`;
+    $('#claim-personal-reward').textContent = '✓ Đã nhận Gói Cá nhân hóa (Xem quyền lợi)';
+    $('#reward-progress-text').textContent = 'Chúc mừng! Gói Cá nhân hóa trị giá 49.000đ/tháng đã được kích hoạt cho tài khoản của bạn.';
+  } else {
+    $('#profile-plan-badge').textContent = 'Gói Miễn phí · ' + userPoints + 'đ';
+    $('#my-reward-status').textContent = userPoints >= 500 ? 'Đủ điều kiện nhận gói!' : `Cần thêm ${500 - userPoints} điểm (hoặc nhận thử ngay)`;
+    $('#reward-progress-text').textContent = `Điểm của bạn: ${userPoints} / 500 điểm`;
+  }
+
+  const competitors = [
+    { name: 'Trần Quốc Bảo · Lớp PTDL', points: 540, reward: 'Đã nhận thưởng Gói Cá nhân hóa' },
+    { name: 'Lê Nguyễn Minh Khuê · Lớp TMĐT', points: 510, reward: 'Đã nhận thưởng Gói Cá nhân hóa' },
+    { name: 'Bạn (Sinh viên trải nghiệm)', points: userPoints, isMe: true, reward: personalPlanRewarded ? 'Đã nhận thưởng Gói Cá nhân hóa ★' : 'Đang đua Top nhận Gói Cá nhân hóa' },
+    { name: 'Phạm Gia Huy · Lớp KTS', points: 430, reward: 'Hạng 4 tuần này' },
+    { name: 'Hoàng Mai Phương · Lớp PTDL', points: 390, reward: 'Hạng 5 tuần này' }
+  ].sort((a, b) => b.points - a.points);
+
+  const listEl = $('#leaderboard-list');
+  if (listEl) {
+    listEl.innerHTML = competitors.map((u, idx) => `
+      <div class="rank-item ${u.isMe ? 'me' : ''}">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="rank-badge ${idx === 0 ? 'rank-1' : idx === 1 ? 'rank-2' : idx === 2 ? 'rank-3' : ''}">${idx + 1}</div>
+          <div>
+            <strong>${u.name}</strong>
+            <div class="sub">${u.reward}</div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <strong style="color:var(--green);font-size:16px">${u.points} đ</strong>
+          ${idx < 3 ? `<div style="font-size:10px;color:var(--gold);font-weight:700">★ TOP NHẬN GÓI CÁ NHÂN</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+$('#earn-bonus-points').onclick = () => {
+  addPoints(40);
+  toast('Điểm danh & hoàn thành nhiệm vụ nhanh thành công! +40 điểm xếp hạng.');
+};
+
+$('#claim-personal-reward').onclick = () => {
+  if (userPoints < 500) {
+    userPoints = 520;
+    try { localStorage.setItem('ll-points', String(userPoints)); } catch (e) {}
+  }
+  personalPlanRewarded = true;
+  try { localStorage.setItem('ll-reward-personal', '1'); } catch (e) {}
+  renderLeaderboardAndReward();
+  renderBooks();
+  drawPrices();
+  show(`
+    <span class="pill gold">🎁 Phần thưởng Xếp hạng L-learning</span>
+    <h2 style="margin:16px 0 8px">Chúc mừng! Bạn đã nhận được Gói Cá nhân hóa</h2>
+    <p class="muted">Với thành tích xuất sắc trên Bảng xếp hạng (${userPoints} điểm), hệ thống đã trao tặng bạn <strong>01 Gói học tập Cá nhân hóa miễn phí</strong> (trị giá 49.000đ/tháng).</p>
+    <div class="detail">
+      <h3>Quyền lợi Gói Cá nhân hóa đã được mở khóa:</h3>
+      <ul style="padding-left:18px;margin:8px 0;line-height:1.8;font-size:13px">
+        <li>✓ Phân tích lỗ hổng kiến thức & Bản đồ năng lực chuyên sâu</li>
+        <li>✓ Miễn phí thuê E-book 7 ngày & Giảm 50% phí thuê sách 30 ngày</li>
+        <li>✓ Hỏi đáp Trợ lý AI giải bài không giới hạn</li>
+        <li>✓ Huy hiệu <strong>★ Gói Cá nhân hóa (Thưởng Xếp hạng)</strong> trên thanh tiêu đề</li>
+      </ul>
+    </div>
+    <div class="row" style="margin-top:18px">
+      <button class="btn light" onclick="$('#modal').close();navigate('books')">📖 Dùng ưu đãi thuê sách</button>
+      <button class="btn" onclick="$('#modal').close();navigate('plans')">Xem trạng thái Gói học tập →</button>
+    </div>
+  `);
+};
+
+// ============================================================================
+// 6. MÔ HÌNH DOANH THU TRONG QUYỀN ADMIN (BỘ MÔ PHỎNG TƯƠNG TÁC)
+// ============================================================================
+function updateRevenueSimulator() {
+  const stu = Number($('#sim-stu')?.value || 390);
+  const lec = Number($('#sim-lec')?.value || 96);
+  const org = Number($('#sim-org')?.value || 26);
+  const book = Number($('#sim-book')?.value || 410);
+
+  $('#sim-stu-val').textContent = stu;
+  $('#sim-lec-val').textContent = lec;
+  $('#sim-org-val').textContent = org;
+  $('#sim-book-val').textContent = book;
+
+  const adsFixed = 5600000;
+  const totalMonth = stu * 49000 + lec * 99000 + org * 1000000 + book * 20000 + adsFixed;
+  const totalYear = totalMonth * 12;
+
+  $('#sim-total-month').textContent = totalMonth.toLocaleString('vi-VN') + 'đ';
+  $('#sim-total-year').textContent = totalYear.toLocaleString('vi-VN') + 'đ';
+  $('#rev-mrr').textContent = (totalMonth / 1000000).toFixed(1).replace('.', ',') + ' tr';
+  $('#rev-arr').textContent = (totalYear / 1000000).toFixed(1).replace('.', ',') + ' tr';
+}
+
+['#sim-stu', '#sim-lec', '#sim-org', '#sim-book'].forEach(sel => {
+  const el = $(sel);
+  if (el) el.addEventListener('input', updateRevenueSimulator);
+});
+
+// ============================================================================
+// 7. CÁC TÍNH NĂNG GỐC: NĂNG LỰC, TRẮC NGHIỆM, FLASHCARD, BẢNG GIÁ
+// ============================================================================
+const topics = ['Thống kê mô tả', 'Trực quan hóa', 'Xử lý dữ liệu', 'Xác suất', 'Hồi quy'];
+[80, 75, 70, 55, 40].forEach((n, i) => {
+  $('#bars').innerHTML += `<div class="skillbar"><div class="row"><strong>${topics[i]}</strong><span class="sub">${n}% · ${n >= 70 ? 'Đang làm tốt' : 'Cần củng cố'}</span></div><div class="progress" style="height:8px;margin-top:12px"><span style="width:${n}%;background:${n >= 70 ? '#7a9b6e' : '#d0ad72'}"></span></div></div>`;
+});
+
+const questions = [
+  { q: 'Trung bình cộng của dãy số 2, 4, 6 là bao nhiêu?', a: ['3', '4', '6', '12'], correct: 1, tag: 'Trung bình cộng', why: 'Cộng các giá trị rồi chia số quan sát: (2 + 4 + 6) / 3 = 4.' },
+  { q: 'Đại lượng nào ít bị ảnh hưởng bởi một giá trị ngoại lệ rất lớn?', a: ['Trung bình cộng', 'Tổng các giá trị', 'Trung vị', 'Khoảng biến thiên'], correct: 2, tag: 'Trung vị', why: 'Trung vị là giá trị ở giữa dãy đã sắp xếp, nên ít bị ảnh hưởng bởi độ lớn của ngoại lệ.' },
+  { q: 'Loại biểu đồ nào phù hợp để so sánh doanh thu giữa các nhóm sản phẩm?', a: ['Biểu đồ cột', 'Biểu đồ phân tán', 'Sơ đồ mạng', 'Bản đồ địa lý'], correct: 0, tag: 'Lựa chọn biểu đồ', why: 'Biểu đồ cột thể hiện giá trị của từng nhóm, giúp so sánh doanh thu giữa các nhóm rõ ràng.' }
+];
+let qi = 0, answers = [];
+function startQuiz() { qi = 0; answers = []; drawQuestion(); }
+function drawQuestion() {
+  let q = questions[qi];
+  show(`<span class="pill">Luyện tập · Câu ${qi + 1}/3</span><h2 style="margin:20px 0">${q.q}</h2><form id="quiz-form">${q.a.map((a, i) => `<label class="option"><input type="radio" name="answer" value="${i}" required>${a}</label>`).join('')}<div class="row" style="margin-top:22px"><span class="sub">${q.tag}</span><button class="btn">${qi === 2 ? 'Nộp bài' : 'Câu tiếp theo →'}</button></div></form>`);
+  $('#quiz-form').onsubmit = e => {
+    e.preventDefault();
+    answers.push(Number(new FormData(e.target).get('answer')));
+    qi++;
+    if (qi < 3) drawQuestion();
+    else finishQuiz();
+  };
+}
+
+function finishQuiz() {
+  result = { answers, score: answers.filter((a, i) => a === questions[i].correct).length };
+  try { localStorage.setItem('ll-result', JSON.stringify(result)); } catch (e) {}
+  addPoints(40);
+  renderResult();
+  show(`<span class="pill">Hoàn thành bài luyện tập · +40 điểm xếp hạng</span><div class="results">${result.score}/3 <span style="font-size:16px;font-weight:400">câu đúng</span></div><h2>${result.score === 3 ? 'Bạn đã nắm tốt kiến thức trong bài!' : 'Mỗi lần luyện tập là một lần tiến bộ.'}</h2><p class="muted">Bạn vừa nhận thêm 40 điểm tích lũy trên Bảng xếp hạng để đổi Gói Cá nhân hóa.</p><button class="btn" id="see-analysis">Xem phân tích của tôi →</button>`);
+  $('#see-analysis').onclick = () => {
+    modal.close();
+    navigate('skills');
+    $('#skill-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+}
+
+function renderResult() {
+  if (!result || !Array.isArray(result.answers) || result.answers.length !== 3) return;
+  $('#last-result').innerHTML = `<strong style="font-size:24px;color:var(--green)">${result.score}/3 câu đúng</strong><p>Ôn tập thống kê mô tả · Kết quả lưu trên trình duyệt này</p><button class="btn light" data-view="skills">Xem phản hồi</button>`;
+  $('#skill-result').innerHTML = '<h2>Phân tích từ bài làm của bạn</h2><p class="sub">Một câu hỏi mỗi chủ đề chỉ cung cấp gợi ý ban đầu, chưa đủ để kết luận mức độ thành thạo.</p>' + questions.map((q, i) => `<div class="detail" style="margin-top:12px"><h3>${result.answers[i] === q.correct ? '✓' : '↻'} ${q.tag} · ${result.answers[i] === q.correct ? 'Trả lời đúng' : 'Nên ôn lại'}</h3><p class="sub">Bạn chọn: ${q.a[result.answers[i]]}. Đáp án: ${q.a[q.correct]}.</p><div>${q.why}</div></div>`).join('');
+  $('#done-count').innerHTML = '13<span style="font-size:12px;color:#9ba395"> / 15</span>';
+}
+
+const plans = [
+  { name: 'Miễn phí', m: '0', y: '0', caption: 'Bắt đầu hành trình học tập', features: ['Tham gia lớp học', 'Làm và nộp bài cơ bản', 'Xem điểm và nhận xét'] },
+  { name: 'Cá nhân hóa', m: '49.000', y: '490.000', caption: 'Cho một người học · Có thể nhận qua Thưởng Xếp hạng', features: ['Phân tích lỗ hổng kiến thức', 'Hồ sơ năng lực cá nhân & Trợ lý AI', 'Ưu đãi 50% phí thuê sách giáo trình', 'Miễn phí nếu đạt Top Bảng xếp hạng'] },
+  { name: 'Giáo viên nâng cao', m: '99.000', y: '990.000', caption: 'Tối đa 10 lớp · 300 học sinh', features: ['Quản lý lớp, giao bài tập & đề thi', 'Ngân hàng câu hỏi', 'Theo dõi, tổng hợp kết quả'] },
+  { name: 'Tổ chức tiêu chuẩn', m: null, y: '12.000.000', caption: 'Dành cho trường học, trung tâm', features: ['Tối đa 10 giáo viên, 50 lớp', 'Tối đa 1.000 học sinh', 'Quản trị và phân quyền tập trung'] }
+];
+
+function drawPrices(c = 'month') {
+  const rewarded = isPersonalPlanActive();
+  $('#pricing').innerHTML = plans.map((p, i) => `
+    <article class="price-card ${i === 1 ? 'featured' : ''}">
+      <span class="tiny" style="color:${i === 1 ? '#236747' : '#87907f'}">${i === 1 ? (rewarded ? '★ ĐÃ MỞ KHÓA QUA THƯỞNG XẾP HẠNG' : 'CÓ THỂ NHẬN THƯỞNG XẾP HẠNG') : 'L-LEARNING'}</span>
+      <h2 style="margin-top:15px">${p.name}</h2>
+      <div class="sub" style="min-height:38px;margin-top:8px">${p.caption}</div>
+      <div class="price">${i === 1 && rewarded ? '0đ (Thưởng)' : c === 'month' && p.m === null ? 'Theo năm' : (c === 'month' ? p.m : p.y) + 'đ'}</div>
+      <span class="sub">${c === 'month' && p.m === null ? '12.000.000đ / năm' : c === 'month' ? '/ tháng' : '/ năm'}</span>
+      <ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
+      <button class="btn ${i === 1 ? '' : 'light'}" data-plan="${i}">${i === 0 ? 'Trải nghiệm miễn phí' : i === 1 && rewarded ? 'Đang kích hoạt ✓' : 'Xem gói'}</button>
+    </article>
+  `).join('');
+}
+
+document.addEventListener('click', e => {
+  let b = e.target.closest('[data-cycle]');
+  if (b) {
+    $$('[data-cycle]').forEach(x => x.classList.toggle('selected', x === b));
+    drawPrices(b.dataset.cycle);
+  }
+  b = e.target.closest('[data-plan]');
+  if (b) {
+    let idx = Number(b.dataset.plan);
+    let p = plans[idx];
+    if (idx === 0) navigate('overview');
+    else show(`
+      <span class="pill">Phương án đề xuất</span>
+      <h2 style="margin:18px 0">${p.name}</h2>
+      <p>${p.caption}</p>
+      <p class="muted">Gói này minh họa mô hình doanh thu trong tài liệu. Đặc biệt, với <strong>Gói Cá nhân hóa</strong>, sinh viên có thể tích điểm trên Bảng xếp hạng để nhận miễn phí làm phần thưởng học tập!</p>
+      <div class="row" style="margin-top:16px">
+        <button class="btn gold" onclick="$('#modal').close();navigate('leaderboard')">★ Tới Bảng xếp hạng nhận gói miễn phí</button>
+      </div>
+    `);
+  }
+});
+
+let fi = 0, flipped = false;
+const cards = [
+  ['Trung bình cộng là gì?', 'Tổng các giá trị chia cho số quan sát.'],
+  ['Trung vị là gì?', 'Giá trị ở giữa dãy số đã sắp xếp; nếu số phần tử chẵn, lấy trung bình hai giá trị giữa.'],
+  ['Khi nào nên dùng biểu đồ cột?', 'Khi muốn so sánh giá trị giữa các nhóm.']
+];
+function drawFlash() {
+  show(`<span class="pill">Flashcard ${fi + 1}/3</span><p class="sub" style="margin-top:15px">Bấm thẻ để lật và xem ${flipped ? 'câu hỏi' : 'đáp án'}.</p><button class="flash" id="flip">${cards[fi][flipped ? 1 : 0]}</button><div class="row" style="margin-top:22px"><button class="btn light" id="prev-card">← Thẻ trước</button><button class="btn" id="next-card">Thẻ tiếp →</button></div><p class="sub" style="margin-top:15px">Thẻ minh họa; chưa áp dụng lịch ôn lặp lại ngắt quãng.</p>`);
+  $('#flip').onclick = () => { flipped = !flipped; drawFlash(); };
+  $('#prev-card').onclick = () => { fi = (fi + 2) % 3; flipped = false; drawFlash(); };
+  $('#next-card').onclick = () => { fi = (fi + 1) % 3; flipped = false; drawFlash(); };
+}
+$('#flash-open').onclick = () => { fi = 0; flipped = false; drawFlash(); };
+
+// ============================================================================
+// 8. QUẢN LÝ ĐĂNG NHẬP & PHÂN QUYỀN (ADMIN XEM ĐƯỢC TẤT CẢ CHỨC NĂNG)
+// ============================================================================
+function selectRole(role) {
+  selectedRole = role;
+  $$('[data-role]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.role === role)));
+  $('#demo-role').textContent = roleAccounts[role].label;
+  $('#demo-email').textContent = roleAccounts[role].email;
+  $('#demo-pass-display').textContent = roleAccounts[role].pass;
+  $('#login-email').value = '';
+  $('#login-password').value = '';
+  $('#login-error').textContent = '';
+}
+$$('[data-role]').forEach(b => b.onclick = () => selectRole(b.dataset.role));
+
+$('#fill-demo').onclick = () => {
+  $('#login-email').value = roleAccounts[selectedRole].email;
+  $('#login-password').value = roleAccounts[selectedRole].pass;
+  $('#login-error').textContent = '';
+  $('#login-form button[type=submit]').focus();
+};
+
+$('#password-toggle').onclick = () => {
+  const input = $('#login-password'), visible = input.type === 'password';
+  input.type = visible ? 'text' : 'password';
+  $('#password-toggle').textContent = visible ? 'Ẩn' : 'Hiện';
+  $('#password-toggle').setAttribute('aria-label', visible ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+  $('#password-toggle').setAttribute('aria-pressed', String(visible));
+};
+
+const rolePages = {
+  admin: {
+    heading: 'Trung tâm Quản trị Hệ thống (Toàn quyền)',
+    intro: 'Admin có quyền truy cập và kiểm thử tất cả các chức năng của Sinh viên, Giảng viên, Phụ huynh và Mô hình doanh thu.',
+    stats: [['128', 'Tài khoản hệ thống'], ['68,4 tr', 'Doanh thu tháng (MRR)'], ['11 phân hệ', 'Quyền truy cập toàn diện']],
+    section: 'Hoạt động hệ thống & Điều phối nhanh',
+    rows: [
+      ['Mô hình doanh thu & Tài chính', '5 nguồn thu: Tổ chức B2B, Gói Cá nhân hóa, Gói Giáo viên, Thuê sách số và Quảng cáo giáo dục'],
+      ['Quản lý lớp học & Giao bài của Giảng viên', 'Theo dõi tiến độ các lớp học phần và kiểm duyệt bài tập giảng viên giao'],
+      ['Không gian Sinh viên (Sách, AI, Xếp hạng)', 'Admin có thể mở trực tiếp tất cả tính năng từ menu bên trái để trải nghiệm và kiểm tra']
+    ],
+    actions: [
+      ['go-revenue', 'Mở Mô hình doanh thu'],
+      ['go-lecturer', 'Mở Quản lý lớp & Giao bài'],
+      ['users', 'Xem danh sách tài khoản'],
+      ['permissions', 'Xem ma trận phân quyền']
+    ]
+  },
+  lecturer: {
+    heading: 'Không gian Giảng viên',
+    intro: 'Quản lý các lớp phụ trách, giao bài tập mới cho sinh viên và theo dõi thống kê học tập.',
+    stats: [['3', 'Lớp phụ trách'], ['86', 'Sinh viên'], ['12', 'Bài chờ chấm']],
+    section: 'Lớp học đang phụ trách',
+    rows: [
+      ['Phân tích dữ liệu · 32 sinh viên', '24/32 đã nộp bài · Hạn nộp: 20/10/2026'],
+      ['Hệ thống thương mại điện tử · 28 sinh viên', '22/28 đã nộp bài · Hạn nộp: 22/10/2026'],
+      ['Kinh tế số · 26 sinh viên', '19/26 đã nộp bài · Hạn nộp: 25/10/2026']
+    ],
+    actions: [
+      ['go-lecturer', 'Quản lý lớp & Giao bài tập mới'],
+      ['grading', 'Xem bài chờ chấm'],
+      ['class-report', 'Xem thống kê lớp']
+    ]
+  },
+  parent: {
+    heading: 'Đồng hành cùng người học',
+    intro: 'Theo dõi kết quả, sách giáo trình đang thuê và thứ hạng học tập của sinh viên được liên kết.',
+    stats: [['8,2', 'Điểm trung bình'], ['12/15', 'Bài đã hoàn thành'], ['460 đ', 'Điểm xếp hạng tích lũy']],
+    section: 'Hồ sơ liên kết · Nguyễn Minh Anh',
+    rows: [
+      ['Phân tích dữ liệu', 'Điểm gần nhất: 8,0/10 · Cần củng cố kiến thức hồi quy'],
+      ['Hệ thống thương mại điện tử', 'Điểm gần nhất: 8,5/10 · Hoàn thành 6/7 bài tập'],
+      ['Kinh tế số', 'Điểm gần nhất: 7,5/10 · Đang đua Top nhận Gói Cá nhân hóa miễn phí']
+    ],
+    actions: [
+      ['schedule', 'Xem lịch cần nhắc'],
+      ['parent-report', 'Xem báo cáo học tập']
+    ]
+  }
+};
+
+function renderRoleHome(role) {
+  const d = rolePages[role];
+  if (!d) return;
+  $('#role-home').innerHTML = `
+    <div class="page-intro">
+      <span class="eyebrow">${roleAccounts[role].label.toUpperCase()}</span>
+      <h1>${d.heading}</h1>
+      <p class="muted">${d.intro}</p>
+    </div>
+    <div class="notice">
+      ${role === 'admin'
+        ? '🔑 <strong>Quyền Admin tối cao:</strong> Bạn có thể bấm vào bất kỳ mục nào ở thanh menu bên trái để xem và thao tác trực tiếp trên tất cả chức năng của hệ thống.'
+        : 'Dữ liệu minh họa để trải nghiệm vai trò. Bạn có thể chuyển qua lại các công cụ được cấp quyền ở menu bên trái.'}
+    </div>
+    <div class="role-summary">${d.stats.map(([v, l]) => `<div class="panel"><strong>${v}</strong><span class="muted">${l}</span></div>`).join('')}</div>
+    <div class="panel">
+      <h2>${d.section}</h2>
+      ${d.rows.map(([h, p]) => `<div class="role-record"><h3>${h}</h3><span class="muted">${p}</span></div>`).join('')}
+    </div>
+    <div class="role-actions">
+      ${d.actions.map(([id, label]) => `<button class="btn ${id.startsWith('go-') ? '' : 'light'}" data-role-action="${id}">${label} →</button>`).join('')}
+    </div>
+  `;
+}
+
+const roleDetails = {
+  users: ['Danh sách tài khoản mẫu', 'QT · Nguyễn Hoàng — Quản trị viên (Toàn quyền)', 'GV · Trần Mai — Giảng viên (Quản lý lớp & Giao bài)', 'SV · Nguyễn Minh Anh — Sinh viên (Học tập, Thuê sách, AI, Xếp hạng)', 'PH · Nguyễn Thu Hà — Phụ huynh (Theo dõi tiến độ)'],
+  permissions: ['Phân quyền hệ thống', 'Quản trị viên (Admin): Xem tất cả chức năng, quản trị Mô hình doanh thu, lớp học và tài khoản.', 'Giảng viên: Quản lý lớp phụ trách, tạo lớp mới, giao bài tập và chấm điểm.', 'Sinh viên: Làm bài, thuê sách giáo trình, hỏi Trợ lý AI và nhận thưởng Gói Cá nhân hóa.', 'Phụ huynh: Xem tiến độ, lịch nhắc và bảng xếp hạng của người học liên kết.'],
+  grading: ['Bài chờ chấm · Minh họa', 'Phân tích dữ liệu: 5 bài tự luận.', 'Hệ thống thương mại điện tử: 4 bài báo cáo.', 'Kinh tế số: 3 bài thảo luận.'],
+  'class-report': ['Thống kê lớp · Minh họa', 'Phân tích dữ liệu: 75% đã nộp bài.', 'Hệ thống thương mại điện tử: 79% đã nộp bài.', 'Kinh tế số: 73% đã nộp bài.'],
+  schedule: ['Lịch nhắc học · Minh họa', '20/10/2026: Nộp bài Phân tích dữ liệu.', '22/10/2026: Nộp bài Hệ thống thương mại điện tử.', '25/10/2026: Hoàn thành ôn tập Kinh tế số.'],
+  'parent-report': ['Báo cáo học tập · Minh họa', 'Người học liên kết: Nguyễn Minh Anh.', 'Điểm trung bình 3 môn: 8,2/10.', 'Gợi ý: Khuyến khích hoàn thành đủ 500 điểm xếp hạng để nhận miễn phí Gói Cá nhân hóa.']
+};
+
+document.addEventListener('click', e => {
+  let b = e.target.closest('[data-role-action]');
+  if (!b || !activeRole) return;
+  const act = b.dataset.roleAction;
+  if (act === 'go-revenue') { navigate('admin-revenue'); return; }
+  if (act === 'go-lecturer') { navigate('lecturer-manage'); return; }
+  if (!roleDetails[act]) return;
+  let [title, ...rows] = roleDetails[act];
+  show(`<span class="pill">${roleAccounts[activeRole].label}</span><h2 style="margin:18px 0">${title}</h2>${rows.map(r => `<div class="role-record">${r}</div>`).join('')}`);
+});
+
+function buildSidebarNavForRole(role) {
+  if (role === 'student') {
+    return `
+      <button data-view="overview" class="active"><span class="ico">▦</span>Tổng quan</button>
+      <button data-view="classes"><span class="ico">▤</span>Lớp học của tôi</button>
+      <button data-view="practice"><span class="ico">▢</span>Bài tập & kiểm tra</button>
+      <button data-view="skills"><span class="ico">⌘</span>Năng lực cá nhân</button>
+      <button data-view="books"><span class="ico">📖</span>Thư viện & Thuê sách</button>
+      <button data-view="ai-helper"><span class="ico">✦</span>Trợ lý AI giải bài</button>
+      <button data-view="leaderboard"><span class="ico">★</span>Xếp hạng & Thưởng</button>
+      <button data-view="plans"><span class="ico">◇</span>Gói học tập</button>
+    `;
+  }
+  if (role === 'lecturer') {
+    return `
+      <button data-view="role-home" class="active"><span class="ico">▦</span>Tổng quan Giảng viên</button>
+      <button data-view="lecturer-manage"><span class="ico">⌘</span>Quản lý lớp & Giao bài</button>
+      <button data-view="books"><span class="ico">📖</span>Thư viện Giáo trình</button>
+      <button data-view="ai-helper"><span class="ico">✦</span>Trợ lý AI giải bài</button>
+      <button data-view="leaderboard"><span class="ico">★</span>Bảng xếp hạng SV</button>
+      <button data-view="plans"><span class="ico">◇</span>Gói dịch vụ</button>
+    `;
+  }
+  if (role === 'parent') {
+    return `
+      <button data-view="role-home" class="active"><span class="ico">▦</span>Tổng quan Phụ huynh</button>
+      <button data-view="leaderboard"><span class="ico">★</span>Xếp hạng & Thưởng</button>
+      <button data-view="books"><span class="ico">📖</span>Thư viện & Thuê sách</button>
+      <button data-view="plans"><span class="ico">◇</span>Gói dịch vụ</button>
+    `;
+  }
+  // ADMIN: Xem được TẤT CẢ các chức năng của toàn hệ thống
+  return `
+    <div class="nav-divider">QUẢN TRỊ & DOANH THU</div>
+    <button data-view="role-home" class="active"><span class="ico">▦</span>Tổng quan Quản trị</button>
+    <button data-view="admin-revenue"><span class="ico">₫</span>Mô hình doanh thu</button>
+    <div class="nav-divider">PHÂN HỆ GIẢNG VIÊN</div>
+    <button data-view="lecturer-manage"><span class="ico">⌘</span>Quản lý lớp & Giao bài</button>
+    <div class="nav-divider">PHÂN HỆ SINH VIÊN (XEM TẤT CẢ)</div>
+    <button data-view="overview"><span class="ico">▤</span>Tổng quan Sinh viên</button>
+    <button data-view="classes"><span class="ico">▥</span>Lớp học của tôi</button>
+    <button data-view="practice"><span class="ico">▢</span>Bài tập & kiểm tra</button>
+    <button data-view="skills"><span class="ico">✧</span>Năng lực cá nhân</button>
+    <button data-view="books"><span class="ico">📖</span>Thư viện & Thuê sách</button>
+    <button data-view="ai-helper"><span class="ico">✦</span>Trợ lý AI giải bài</button>
+    <button data-view="leaderboard"><span class="ico">★</span>Xếp hạng & Thưởng</button>
+    <button data-view="plans"><span class="ico">◇</span>Gói học tập</button>
+  `;
+}
+
+function enterRole(role) {
+  activeRole = role;
+  const a = roleAccounts[role];
+  $('#login-screen').hidden = true;
+  document.body.classList.remove('signed-out');
+  $('#current-role').textContent = a.label + (role === 'admin' ? ' · Toàn quyền' : ' · Bản mẫu');
+  $('.profile .avatar').textContent = a.initials;
+  $('#profile-name').textContent = a.label + ' trải nghiệm';
+  $('nav').innerHTML = buildSidebarNavForRole(role);
+  $('.sidebar-card').hidden = (role === 'parent');
+  $('.navlabel').textContent = role === 'student' ? 'KHÔNG GIAN HỌC TẬP' : a.label.toUpperCase();
+
+  $('#notify').onclick = () => show(
+    role === 'student'
+      ? '<h2>Thông báo học tập</h2><p>Bạn có thể làm bài tập giảng viên giao hoặc đạt Top bảng xếp hạng để nhận miễn phí Gói Cá nhân hóa.</p>'
+      : `<h2>Thông báo ${a.label.toLowerCase()}</h2><p>${role === 'parent' ? 'Có 3 bài tập cần hoàn thành trong tháng này.' : role === 'lecturer' ? 'Bạn có thể tạo lớp học mới và giao bài tập trong mục Quản lý lớp & Giao bài.' : 'Admin đang có quyền truy cập toàn bộ 11 phân hệ bao gồm Mô hình doanh thu.'}</p>`
+  );
+
+  renderRoleHome(role);
+  navigate(role === 'student' ? 'overview' : 'role-home');
+  $('#login-password').value = '';
+  try { sessionStorage.setItem('ll-demo-role', role); } catch (e) {}
+}
+
+$('#login-form').onsubmit = e => {
+  e.preventDefault();
+  const enteredEmail = $('#login-email').value.trim().toLowerCase();
+  const enteredPass = $('#login-password').value;
+  const expected = roleAccounts[selectedRole];
+  if (enteredEmail !== expected.email || (enteredPass !== expected.pass && enteredPass !== 'Demo@123')) {
+    $('#login-error').textContent = `Email hoặc mật khẩu chưa đúng với vai trò ${expected.label}. Bạn có thể bấm “Điền tài khoản mẫu” hoặc “Quên mật khẩu?”.`;
+    return;
+  }
+  enterRole(selectedRole);
+};
+
+$('#logout').onclick = () => {
+  if (modal.open) modal.close();
+  activeRole = null;
+  try { sessionStorage.removeItem('ll-demo-role'); } catch (e) {}
+  document.body.classList.add('signed-out');
+  $('#login-screen').hidden = false;
+  $('#login-password').type = 'password';
+  $('#password-toggle').textContent = 'Hiện';
+  $('#password-toggle').setAttribute('aria-label', 'Hiện mật khẩu');
+  $('#password-toggle').setAttribute('aria-pressed', 'false');
+  selectRole(selectedRole);
+  history.replaceState(null, '', location.pathname + location.search);
+  window.scrollTo(0, 0);
+  $('#login-email').focus();
+};
+
+// Khởi chạy toàn bộ dữ liệu ban đầu
+drawClasses();
+renderAssignmentsEverywhere();
+renderBooks();
+renderAiChat();
+runStatTool();
+runEqTool();
+renderLeaderboardAndReward();
+drawPrices();
+renderResult();
+updateRevenueSimulator();
+
+selectRole('student');
+try {
+  const saved = sessionStorage.getItem('ll-demo-role');
+  if (Object.hasOwn(roleAccounts, saved)) enterRole(saved);
+} catch (e) {}
+
+window.addEventListener('hashchange', () => {
+  if (activeRole) navigate(location.hash.slice(1));
+});
+</script>
+</body>
+</html>
